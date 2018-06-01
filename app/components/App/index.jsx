@@ -79,8 +79,9 @@ export default class App extends React.Component {
 
     return (
       <Layout className={styles.app}>
-        <Sider>
+        <Sider className={styles.sider}>
           <Header className={styles.siderHeader}>
+            <Icon type="appstore" />
             <h1>体育管理</h1>
           </Header>
           <Menu

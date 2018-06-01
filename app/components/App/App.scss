@@ -1,12 +1,29 @@
 .app {
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+
+  :global(.ant-layout-sider) {
+    overflow-y: auto;
+  }
 }
 
 .sider-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-left: 25px !important;
   background-color: #002140 !important;
+  white-space: nowrap;
+  font-size: 20px;
+  cursor: move;
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
+
 
   h1 {
-    color: inherit;
+    margin-left: 16px;
     font-size: 20px;
+    display: inline-block;
+    color: inherit;
   }
 }
