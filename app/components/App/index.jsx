@@ -75,6 +75,38 @@ export default class App extends React.Component {
     history.push(`${inf.key}`);
   };
 
+  renderRoutes = ({ item, ctx, renderNode }) => {
+    const path = ctx.basePath + item.path;
+
+    if ("children" in item) {
+      return R.map(
+        subItem =>
+          renderNode({
+            item: subItem,
+            ctx: {
+              basePath: path
+            },
+            renderNode
+          }),
+        item.children
+      );
+    }
+
+    return (
+      <Route
+        path={`/${path}`}
+        render={routeProps => {
+          if ("component" in item) {
+            const Comp = item.component;
+            return <Comp {...routeProps} />;
+          }
+
+          return path;
+        }}
+      />
+    );
+  };
+
   renderMenuItem = ({ item, ctx }) => (
     <Menu.Item key={ctx.basePath + item.path}>
       <span>
@@ -120,6 +152,16 @@ export default class App extends React.Component {
       renderNode: this.renderSubMenu,
       renderLeaf: this.renderMenuItem
     });
+    const routes = R.flatten(
+      mapRouteConfig({
+        config: siderMenuConfig,
+        ctx: {
+          basePath: ""
+        },
+        renderNode: this.renderRoutes,
+        renderLeaf: this.renderRoutes
+      })
+    );
     const defaultOpenKeys = R.map(R.prop("path"))(siderMenuConfig);
 
     return (
@@ -142,7 +184,7 @@ export default class App extends React.Component {
         <Layout>
           <Header>Header</Header>
           <Content>
-            <Switch />
+            <Switch>{routes}</Switch>
           </Content>
         </Layout>
       </Layout>
