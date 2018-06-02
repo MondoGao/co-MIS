@@ -1,38 +1,17 @@
 import React from "react";
 import * as R from "ramda";
-import { Menu, Icon } from "antd";
 
-export function genSubmenus({ config, basePath = "" }) {
-  function getMenuChildren(menuItem) {
-    return (
-      <span>
-        {"icon" in menuItem ? <Icon type={menuItem.icon} /> : null}
-        {menuItem.title}
-      </span>
-    );
-  }
-
-  return R.map(menuItem => {
-    if ("children" in menuItem) {
-      const childrenEles = genSubmenus({
-        config: menuItem.children,
-        basePath: menuItem.path
-      });
-
-      return (
-        <Menu.SubMenu
-          key={basePath + menuItem.path}
-          title={getMenuChildren(menuItem)}
-        >
-          {childrenEles}
-        </Menu.SubMenu>
-      );
+export function mapRouteConfig({
+  config = [],
+  ctx = {},
+  renderNode = R.identity,
+  renderLeaf = R.identity
+}) {
+  return R.map(item => {
+    if ("children" in item) {
+      return renderNode({ item, ctx, renderLeaf, renderNode });
     }
 
-    return (
-      <Menu.Item key={basePath + menuItem.path}>
-        {getMenuChildren(menuItem)}
-      </Menu.Item>
-    );
+    return renderLeaf({ item, ctx, renderNode, renderLeaf });
   })(config);
 }

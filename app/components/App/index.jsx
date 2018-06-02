@@ -1,14 +1,11 @@
 import * as React from "react";
 import { Layout, Menu, Icon } from "antd";
+import { Route, Switch } from "react-router";
 import * as R from "ramda";
 
 import { history } from "../../store/configureStore";
-
+import { mapRouteConfig } from "../../utils/jsxHelpers";
 import styles from "./App.scss";
-
-import { genSubmenus } from "../../utils/jsxHelpers";
-
-const { SubMenu } = Menu;
 
 const { Sider, Content, Header } = Layout;
 
@@ -74,17 +71,54 @@ const siderMenuConfig = [
 ];
 
 export default class App extends React.Component {
-  componentDidMount() {
-    // history.push(`sportMonitor`);
-  }
-
   handleMenuItemSelect = inf => {
     history.push(`${inf.key}`);
   };
 
+  renderMenuItem = ({ item, ctx }) => (
+    <Menu.Item key={ctx.basePath + item.path}>
+      <span>
+        {"icon" in item ? <Icon type={item.icon} /> : null}
+        {item.title}
+      </span>
+    </Menu.Item>
+  );
+
+  renderSubMenu = ({ item, ctx, renderLeaf, renderNode }) => {
+    const path = ctx.basePath + item.path;
+    const childrenEles = mapRouteConfig({
+      config: item.children,
+      ctx: {
+        basePath: path
+      },
+      renderLeaf,
+      renderNode
+    });
+
+    const title = renderLeaf({
+      item,
+      ctx: {
+        basePath: path
+      },
+      renderLeaf,
+      renderNode
+    }).props.children;
+
+    return (
+      <Menu.SubMenu key={path} title={title}>
+        {childrenEles}
+      </Menu.SubMenu>
+    );
+  };
+
   render() {
-    const siderMenus = genSubmenus({
-      config: siderMenuConfig
+    const siderMenus = mapRouteConfig({
+      config: siderMenuConfig,
+      ctx: {
+        basePath: ""
+      },
+      renderNode: this.renderSubMenu,
+      renderLeaf: this.renderMenuItem
     });
     const defaultOpenKeys = R.map(R.prop("path"))(siderMenuConfig);
 
@@ -107,6 +141,9 @@ export default class App extends React.Component {
         </Sider>
         <Layout>
           <Header>Header</Header>
+          <Content>
+            <Switch />
+          </Content>
         </Layout>
       </Layout>
     );
