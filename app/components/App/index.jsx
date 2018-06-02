@@ -2,12 +2,15 @@ import * as React from "react";
 import { Layout, Menu, Icon } from "antd";
 import * as R from "ramda";
 
+import { history } from "../../store/configureStore";
+
 import styles from "./App.scss";
 
 import { genSubmenus } from "../../utils/jsxHelpers";
 
-const { Sider, Content, Header } = Layout;
 const { SubMenu } = Menu;
+
+const { Sider, Content, Header } = Layout;
 
 const siderMenuConfig = [
   {
@@ -71,6 +74,14 @@ const siderMenuConfig = [
 ];
 
 export default class App extends React.Component {
+  componentDidMount() {
+    // history.push(`sportMonitor`);
+  }
+
+  handleMenuItemSelect = inf => {
+    history.push(`${inf.key}`);
+  };
+
   render() {
     const siderMenus = genSubmenus({
       config: siderMenuConfig
@@ -89,10 +100,14 @@ export default class App extends React.Component {
             defaultSelectedKeys={["sportMonitor"]}
             mode="inline"
             defaultOpenKeys={defaultOpenKeys}
+            onSelect={this.handleMenuItemSelect}
           >
             {siderMenus}
           </Menu>
         </Sider>
+        <Layout>
+          <Header>Header</Header>
+        </Layout>
       </Layout>
     );
   }

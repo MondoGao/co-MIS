@@ -11,6 +11,7 @@ export function genSubmenus({ config, basePath = "" }) {
       </span>
     );
   }
+
   return R.map(menuItem => {
     if ("children" in menuItem) {
       const childrenEles = genSubmenus({
