@@ -2,30 +2,31 @@
  * Build config for electron renderer process
  */
 
-import path from 'path';
-import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import merge from 'webpack-merge';
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
-import baseConfig from './webpack.config.base';
-import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
+import path from "path";
+import webpack from "webpack";
+import ExtractTextPlugin from "extract-text-webpack-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import merge from "webpack-merge";
+import UglifyJSPlugin from "uglifyjs-webpack-plugin";
+import baseConfig from "./webpack.config.base";
+import devConfig from "./webpack.config.renderer.dev";
+import CheckNodeEnv from "./internals/scripts/CheckNodeEnv";
 
-CheckNodeEnv('production');
+CheckNodeEnv("production");
 
 export default merge.smart(baseConfig, {
-  devtool: 'source-map',
+  devtool: "source-map",
 
-  mode: 'production',
+  mode: "production",
 
-  target: 'electron-renderer',
+  target: "electron-renderer",
 
-  entry: './app/index',
+  entry: "./app/index",
 
   output: {
-    path: path.join(__dirname, 'app/dist'),
-    publicPath: './dist/',
-    filename: 'renderer.prod.js'
+    path: path.join(__dirname, "app/dist"),
+    publicPath: "./dist/",
+    filename: "renderer.prod.js"
   },
 
   module: {
@@ -34,14 +35,14 @@ export default merge.smart(baseConfig, {
       {
         test: /\.global\.css$/,
         use: ExtractTextPlugin.extract({
-          publicPath: './',
+          publicPath: "./",
           use: {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               minimize: true
             }
           },
-          fallback: 'style-loader'
+          fallback: "style-loader"
         })
       },
       // Pipe other styles through css modules and append to style.css
@@ -49,12 +50,12 @@ export default merge.smart(baseConfig, {
         test: /^((?!\.global).)*\.css$/,
         use: ExtractTextPlugin.extract({
           use: {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               modules: true,
               minimize: true,
               importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]'
+              localIdentName: "[name]__[local]__[hash:base64:5]"
             }
           }
         })
@@ -65,16 +66,16 @@ export default merge.smart(baseConfig, {
         use: ExtractTextPlugin.extract({
           use: [
             {
-              loader: 'css-loader',
+              loader: "css-loader",
               options: {
                 minimize: true
               }
             },
             {
-              loader: 'sass-loader'
+              loader: "sass-loader"
             }
           ],
-          fallback: 'style-loader'
+          fallback: "style-loader"
         })
       },
       // Add SASS support  - compile all other .scss files and pipe it to style.css
@@ -83,16 +84,16 @@ export default merge.smart(baseConfig, {
         use: ExtractTextPlugin.extract({
           use: [
             {
-              loader: 'css-loader',
+              loader: "css-loader",
               options: {
                 modules: true,
                 minimize: true,
                 importLoaders: 1,
-                localIdentName: '[name]__[local]__[hash:base64:5]'
+                localIdentName: "[name]__[local]__[hash:base64:5]"
               }
             },
             {
-              loader: 'sass-loader'
+              loader: "sass-loader"
             }
           ]
         })
@@ -101,10 +102,10 @@ export default merge.smart(baseConfig, {
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         use: {
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
-            mimetype: 'application/font-woff'
+            mimetype: "application/font-woff"
           }
         }
       },
@@ -112,10 +113,10 @@ export default merge.smart(baseConfig, {
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
         use: {
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
-            mimetype: 'application/font-woff'
+            mimetype: "application/font-woff"
           }
         }
       },
@@ -123,37 +124,38 @@ export default merge.smart(baseConfig, {
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         use: {
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
-            mimetype: 'application/octet-stream'
+            mimetype: "application/octet-stream"
           }
         }
       },
       // EOT Font
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'file-loader'
+        use: "file-loader"
       },
       // SVG Font
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         use: {
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
-            mimetype: 'image/svg+xml'
+            mimetype: "image/svg+xml"
           }
         }
       },
       // Common Image Formats
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
-        use: 'url-loader'
+        use: "url-loader"
       }
     ]
   },
 
+  resolve: devConfig.resolve,
   plugins: [
     /**
      * Create global constants which can be configured at compile time.
@@ -165,7 +167,7 @@ export default merge.smart(baseConfig, {
      * development checks
      */
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'production'
+      NODE_ENV: "production"
     }),
 
     new UglifyJSPlugin({
@@ -173,12 +175,12 @@ export default merge.smart(baseConfig, {
       sourceMap: true
     }),
 
-    new ExtractTextPlugin('style.css'),
+    new ExtractTextPlugin("style.css"),
 
     new BundleAnalyzerPlugin({
       analyzerMode:
-        process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
-      openAnalyzer: process.env.OPEN_ANALYZER === 'true'
+        process.env.OPEN_ANALYZER === "true" ? "server" : "disabled",
+      openAnalyzer: process.env.OPEN_ANALYZER === "true"
     })
   ]
 });

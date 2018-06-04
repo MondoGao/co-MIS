@@ -207,6 +207,12 @@ export default merge.smart(baseConfig, {
     ]
   },
 
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "app")
+    }
+  },
+
   plugins: [
     requiredByDLLConfig
       ? null
