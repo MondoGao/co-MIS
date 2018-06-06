@@ -37,7 +37,7 @@ async function initDbUser() {
   }
 }
 
-async function initDbConnection({ maxTryCount = 4 }) {
+async function initDbConnection({ maxTryCount = 4 } = {}) {
   for (let count = 1; count <= maxTryCount; count++) {
     try {
       logger.info(`${count}th try to connect`);
