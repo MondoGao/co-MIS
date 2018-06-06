@@ -1,0 +1,28 @@
+version: '3'
+services:
+  mis-server:
+    build: .
+    image: mis-server:latest
+    depends_on:
+      - mis-mongo
+    environment:
+      MONGO_HOST: mongo
+    networks:
+      mis:
+        aliases:
+          - server
+  mis-mongo:
+    image: mongo:3
+    volumes:
+      - ./build:/app/build:ro
+    ports:
+      - 27017:27017
+    networks:
+      mis:
+        aliases:
+          - mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pwdMis
+networks:
+  mis:
