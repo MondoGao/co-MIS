@@ -1,5 +1,5 @@
 function delay(mili) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(resolve, mili);
   });
 }

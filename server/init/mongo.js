@@ -1,12 +1,12 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const logger = require("../logger");
-const config = require("../config");
-const delay = require("../helpers/delay");
+const logger = require('../logger');
+const config = require('../config');
+const delay = require('../helpers/delay');
 
 const { host, db } = config;
 
-logger.info("Config", config);
+logger.info('Config', config);
 
 let canConnect = false;
 
@@ -22,13 +22,13 @@ async function initDbUser() {
     );
     canConnect = true;
 
-    logger.info("Mongodb is started");
+    logger.info('Mongodb is started');
     // Try to create default user if we cann't connect.
 
-    const sportsDb = conn.client.db("sports");
+    const sportsDb = conn.client.db('sports');
 
     await sportsDb.addUser(db.app.user, db.app.pass, {
-      roles: [{ role: "readWrite", db: "sports" }]
+      roles: [{ role: 'readWrite', db: 'sports' }],
     });
   } catch (e) {
     throw e;
@@ -50,9 +50,9 @@ async function initDbConnection({ maxTryCount = 4 } = {}) {
 
   await mongoose.connect(`mongodb://${host}/sports`, db.app);
 
-  logger.info(`Success connected to mongo with mondo in sports`);
+  logger.info('Success connected to mongo with mondo in sports');
 }
 
 module.exports = {
-  initDbConnection
+  initDbConnection,
 };
