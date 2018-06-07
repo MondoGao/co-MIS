@@ -36,8 +36,7 @@
       "error",
       { "extensions": [".js", ".jsx"] }
     ],
-    "react/prefer-stateless-function": "off",
-    "quotes": ["error", "single"]
+    "react/prefer-stateless-function": "off"
   },
   "plugins": ["flowtype", "import", "promise", "compat", "react"],
   "settings": {
