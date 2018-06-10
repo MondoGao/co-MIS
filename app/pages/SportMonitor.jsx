@@ -1,5 +1,8 @@
 import React from 'react';
-import { Steps } from 'antd';
+import { Steps, Layout } from 'antd';
+
+import CardReader from '../components/CardReader';
+import styles from './SportMonitor.scss';
 
 const { Fragment, Component } = React;
 const { Step } = Steps;
@@ -8,7 +11,7 @@ export default class SportMonitor extends Component {
   state = {
     currentStage: 1,
   };
-  renderBindBand = () => {};
+  renderBindBand = () => <CardReader />;
   renderSteps = steps =>
     steps.map(stepOpt => (
       <Step
@@ -29,7 +32,7 @@ export default class SportMonitor extends Component {
       {
         name: 'bind',
         title: '綁定运动追踪器',
-        render: () => '未实现',
+        render: this.renderBindBand,
       },
       {
         name: 'monitor',
@@ -46,7 +49,9 @@ export default class SportMonitor extends Component {
     return (
       <Fragment>
         <Steps current={currentStage}>{this.renderSteps(steps)}</Steps>
-        <div>{this.renderContent(steps)}</div>
+        <Layout className={styles.contentWrapper}>
+          {this.renderContent(steps)}
+        </Layout>
       </Fragment>
     );
   }
