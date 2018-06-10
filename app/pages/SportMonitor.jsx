@@ -11,7 +11,14 @@ export default class SportMonitor extends Component {
   state = {
     currentStage: 1,
   };
-  renderBindBand = () => <CardReader />;
+
+  nextStage = () => {
+    this.setState(({ currentStage }) => ({
+      currentStage: currentStage + 1,
+    }));
+  };
+
+  renderBindBand = () => <CardReader next={this.nextStage} />;
   renderSteps = steps =>
     steps.map(stepOpt => (
       <Step
