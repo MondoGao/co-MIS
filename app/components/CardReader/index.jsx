@@ -20,7 +20,7 @@ export default class CardReader extends React.Component {
     {
       percent: 66,
       text: '登记设备中...',
-      process: sources.sports.startSport,
+      process: sources.sports.add,
     },
     {
       percent: 100,

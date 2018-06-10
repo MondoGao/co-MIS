@@ -37,6 +37,12 @@
   z-index: 10;
 }
 
+.page-layout {
+  max-height: calc(100vh - 64px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .page-header:global(.ant-layout-header) {
   background: #fff;
   color: #222;
