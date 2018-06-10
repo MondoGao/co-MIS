@@ -1,0 +1,16 @@
+.container:global(.ant-layout) {
+  align-items: center;
+  background: #fff;
+
+  :global(.ant-progress) {
+    margin: 40px 0 20px;
+  }
+}
+
+.tip-wrapper {
+  margin-top: 20px;
+
+  .tip-text {
+    margin-left: 10px;
+  }
+}

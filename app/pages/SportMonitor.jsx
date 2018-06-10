@@ -49,9 +49,7 @@ export default class SportMonitor extends Component {
     return (
       <Fragment>
         <Steps current={currentStage}>{this.renderSteps(steps)}</Steps>
-        <Layout className={styles.contentWrapper}>
-          {this.renderContent(steps)}
-        </Layout>
+        {this.renderContent(steps)}
       </Fragment>
     );
   }
