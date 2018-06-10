@@ -3,7 +3,6 @@ import { Steps, Layout, Card } from 'antd';
 
 import CardReader from '@/components/CardReader';
 import SportStatus from '@/components/SportStatus';
-import styles from './SportMonitor.scss';
 
 const { Fragment, Component } = React;
 const { Step } = Steps;

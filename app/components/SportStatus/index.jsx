@@ -7,11 +7,16 @@ export default class SportStatus extends React.Component {
   state = {
     amapIns: null,
   };
-  mapRef = React.createRef();
 
   componentDidMount() {
     this.mountMap();
   }
+
+  componentWillUnmount() {
+    this.state.amapIns.destroy();
+  }
+
+  mapRef = React.createRef();
 
   mountMap() {
     const amapIns = new AMap.Map(this.mapRef.current, {

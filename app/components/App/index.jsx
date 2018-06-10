@@ -8,6 +8,7 @@ import { mapRouteConfig } from '@/utils/jsxHelpers';
 import styles from './App.scss';
 
 import SportMonitor from '@/pages/SportMonitor';
+import SportData from '@/pages/SportData';
 
 const { Sider, Content, Header } = Layout;
 
@@ -49,6 +50,7 @@ const siderMenuConfig = [
         path: 'Data',
         title: '数据查询',
         desc: '查询运动数据',
+        component: SportData,
       },
     ],
   },
@@ -167,6 +169,7 @@ export default class App extends React.Component {
       }),
     );
     const defaultOpenKeys = R.map(R.prop('path'))(siderMenuConfig);
+    const defaultPath = 'sportData';
 
     return (
       <Layout className={styles.app}>
@@ -177,7 +180,7 @@ export default class App extends React.Component {
           </Header>
           <Menu
             theme="dark"
-            defaultSelectedKeys={['sportMonitor']}
+            defaultSelectedKeys={[defaultPath]}
             mode="inline"
             defaultOpenKeys={defaultOpenKeys}
             onSelect={this.handleMenuItemSelect}
@@ -190,7 +193,7 @@ export default class App extends React.Component {
           <Content>
             <Switch>
               {routes}
-              <Redirect exact path="/" to="/sportMonitor" />
+              <Redirect exact path="/" to={defaultPath} />
             </Switch>
           </Content>
         </Layout>
