@@ -1,4 +1,7 @@
 {
+  "globals": {
+    "AMap": true
+  },
   "rules": {
     "flowtype/boolean-style": ["error", "boolean"],
     "flowtype/define-flow-type": "warn",
@@ -17,5 +20,5 @@
     "flowtype/union-intersection-spacing": ["error", "always"],
     "flowtype/use-flow-type": "error",
     "flowtype/valid-syntax": "error"
-  },
+  }
 }

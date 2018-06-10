@@ -1,7 +1,8 @@
 import React from 'react';
 import { Steps, Layout } from 'antd';
 
-import CardReader from '../components/CardReader';
+import CardReader from '@/components/CardReader';
+import SportStatus from '@/components/SportStatus';
 import styles from './SportMonitor.scss';
 
 const { Fragment, Component } = React;
@@ -9,7 +10,7 @@ const { Step } = Steps;
 
 export default class SportMonitor extends Component {
   state = {
-    currentStage: 1,
+    currentStage: 2,
   };
 
   nextStage = () => {
@@ -19,6 +20,7 @@ export default class SportMonitor extends Component {
   };
 
   renderBindBand = () => <CardReader next={this.nextStage} />;
+  renderSportStatus = () => <SportStatus next={this.nextStage} />;
   renderSteps = steps =>
     steps.map(stepOpt => (
       <Step
@@ -28,6 +30,7 @@ export default class SportMonitor extends Component {
       />
     ));
   renderContent = steps => steps[this.state.currentStage].render();
+
   render() {
     const { currentStage } = this.state;
     const steps = [
@@ -44,7 +47,7 @@ export default class SportMonitor extends Component {
       {
         name: 'monitor',
         title: '查看即时数据',
-        render: () => '未实现',
+        render: this.renderSportStatus,
       },
       {
         name: 'result',
