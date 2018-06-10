@@ -9,6 +9,7 @@ import styles from './App.scss';
 
 import SportMonitor from '@/pages/SportMonitor';
 import SportData from '@/pages/SportData';
+import SpaceReservation from '@/pages/SpaceReservation';
 
 const { Sider, Content, Header } = Layout;
 
@@ -17,6 +18,7 @@ const commonChildren = [
     path: 'Reservation',
     title: '预约',
     desc: '提前预约空闲资源',
+    component: SpaceReservation,
   },
   {
     path: 'Borrow',
@@ -169,7 +171,7 @@ export default class App extends React.Component {
       }),
     );
     const defaultOpenKeys = R.map(R.prop('path'))(siderMenuConfig);
-    const defaultPath = 'sportData';
+    const defaultPath = 'spaceReservation';
 
     return (
       <Layout className={styles.app}>
