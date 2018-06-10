@@ -29,6 +29,7 @@ export default class CardReader extends React.Component {
         await delay(2000);
         await this.complete();
       },
+      complete: true,
     },
   ];
 
@@ -47,13 +48,16 @@ export default class CardReader extends React.Component {
   };
 
   async switchStage() {
-    const { process } = this.stages[this.state.stage];
+    const { process, complete } = this.stages[this.state.stage];
 
     await process();
 
+    if (complete) {
+      return;
+    }
+
     this.setState(({ stage }) => ({
-      stage:
-        stage + 1 >= this.stages.length ? this.stages.length - 1 : stage + 1,
+      stage: stage + 1,
     }));
   }
 
