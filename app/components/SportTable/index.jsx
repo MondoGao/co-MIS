@@ -30,8 +30,10 @@ export default class SportTable extends React.Component {
   };
 
   render() {
+    const { data, isLoading } = this.state;
+
     return (
-      <Table rowKey="id" bordered dataSource={this.state.data}>
+      <Table rowKey="id" bordered dataSource={data} loading={isLoading}>
         <Column title="运动编号" dataIndex="id" key="id" />
         <Column title="开始时间" dataIndex="startTime" key="startTime" />
         <Column title="是否结束" dataIndex="isFinished" key="isFinishes" />
