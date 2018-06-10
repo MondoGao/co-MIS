@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Timeline, Button } from 'antd';
+import { Layout, Timeline, Button, Alert } from 'antd';
 
 import styles from './SportStatus.scss';
 
@@ -28,16 +28,52 @@ export default class SportStatus extends React.Component {
     this.props.next();
   };
 
+  handleRestart = () => {
+    this.props.restart();
+  };
+
+  renderTip() {
+    if (!this.props.isFinished) {
+      return null;
+    }
+
+    return <Alert message="成功完成运动!" type="success" showIcon />;
+  }
+  renderTimeline() {
+    const dataStr = '已跑 1 km, 用时 1 分';
+    const startTime = 1;
+
+    let timeline = (
+      <Timeline pending={dataStr}>
+        <Timeline.Item color="green">开始时间: {startTime}</Timeline.Item>
+      </Timeline>
+    );
+
+    if (this.props.isFinished) {
+      timeline = (
+        <Timeline>
+          <Timeline.Item color="green">开始时间: {startTime}</Timeline.Item>
+          <Timeline.Item color="green">{dataStr}</Timeline.Item>
+        </Timeline>
+      );
+    }
+
+    return <div className={styles.timelineContainer}>{timeline}</div>;
+  }
+  renderButton() {
+    if (this.props.isFinished) {
+      return <Button onClick={this.handleRestart}>重新开始</Button>;
+    }
+    return <Button onClick={this.handleFinish}>结束运动</Button>;
+  }
+
   render() {
     return (
       <Layout className={styles.container}>
+        {this.renderTip()}
         <div className={styles.mapContainer} ref={this.mapRef} />
-        <div className={styles.timelineContainer}>
-          <Timeline pending="已跑 1 km, 用时 1 分">
-            <Timeline.Item color="green">开始时间: {1}</Timeline.Item>
-          </Timeline>
-        </div>
-        <Button onClick={this.handleFinish}>结束运动</Button>
+        {this.renderTimeline()}
+        {this.renderButton()}
       </Layout>
     );
   }

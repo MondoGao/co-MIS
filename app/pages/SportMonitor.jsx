@@ -1,5 +1,5 @@
 import React from 'react';
-import { Steps, Layout } from 'antd';
+import { Steps, Layout, Card } from 'antd';
 
 import CardReader from '@/components/CardReader';
 import SportStatus from '@/components/SportStatus';
@@ -19,8 +19,23 @@ export default class SportMonitor extends Component {
     }));
   };
 
+  restartStage = () => {
+    this.setState(({ currentStage }) => ({
+      currentStage: 1,
+    }));
+  };
+
   renderBindBand = () => <CardReader next={this.nextStage} />;
-  renderSportStatus = () => <SportStatus next={this.nextStage} />;
+  renderSportStatus = () => (
+    <SportStatus next={this.nextStage} isFinished={false} />
+  );
+  renderSportResult = () => (
+    <SportStatus
+      next={this.nextStage}
+      isFinished={true}
+      restart={this.restartStage}
+    />
+  );
   renderSteps = steps =>
     steps.map(stepOpt => (
       <Step
@@ -52,7 +67,7 @@ export default class SportMonitor extends Component {
       {
         name: 'result',
         title: '运动结果',
-        render: () => '未实现',
+        render: this.renderSportResult,
       },
     ];
 
