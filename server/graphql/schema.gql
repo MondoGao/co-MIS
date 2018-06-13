@@ -6,10 +6,22 @@ type User {
   name: String!
 }
 
+input UserQuery {
+  id: ID
+  rfid: String
+  name: String
+}
+
 type Tracker {
   id: ID!
   rfid: String!
   channel: String!
+}
+
+input TrackerQuery {
+  id: ID
+  rfid: String
+  channel: String
 }
 
 type Coordinate {
@@ -26,9 +38,22 @@ type SportRecord {
   path: [Coordinate]!
 }
 
+input SportRecordQuery {
+  id: ID
+  user: UserQuery
+  tracker: TrackerQuery
+  startTime: Date
+  endTime: Date
+}
+
 interface ResourceType {
   id: ID!
   name: String!
+}
+
+input ResourceTypeQuery {
+  id: ID
+  name: String
 }
 
 type SpaceType implements ResourceType {
@@ -60,6 +85,14 @@ interface Resource {
   createAt: Date!
 }
 
+input ResourceQuery {
+  id: ID
+  name: String
+  type: ResourceTypeQuery
+  isAvaliable: Boolean
+  createAt: Date
+}
+
 type Space implements Resource {
   id: ID!
   name: String!
@@ -88,13 +121,23 @@ type Reservation {
   resource: Resource!
 }
 
+input ReservationQuery {
+  id: ID
+  startTime: Date
+  endTime: Date
+  isActived: Boolean
+  isClosed: Boolean
+  user: UserQuery
+  resource: ResourceQuery
+}
+
 type Query {
-  users: [User]
-  trackers: [Tracker]
-  sportRecords: [SportRecord]
-  spaceTypes: [SpaceType]
-  equipmentTypes: [EquipmentType]
-  spaces: [Space]
-  equipments: [Equipment]
-  reservations: [Reservation]
+  users(query: UserQuery): [User]
+  trackers(query: TrackerQuery): [Tracker]
+  sportRecords(query: SportRecordQuery): [SportRecord]
+  spaceTypes(query: ResourceTypeQuery): [SpaceType]
+  equipmentTypes(query: ResourceTypeQuery): [EquipmentType]
+  spaces(query: ResourceQuery): [Space]
+  equipments(query: ResourceQuery): [Equipment]
+  reservations(query: ReservationQuery): [Reservation]
 }

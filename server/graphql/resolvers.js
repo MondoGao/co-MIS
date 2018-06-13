@@ -12,33 +12,23 @@ const {
   Reservation,
 } = require('../models');
 
+const entitiesResolverCreator = Entity => (obj, args) =>
+  Entity.find(args.query);
+
 const resolvers = {
   Date: GraphQLDateTime,
   Query: {
-    users: () => User.find(),
-    trackers: () => Tracker.find(),
-    sportRecords: () => SportRecord.find(),
-    spaceTypes: () => SpaceType.find(),
-    spaces: () => Space.find(),
-    equipmentTypes: () => EquipmentType.find(),
-    equipments: () => Equipment.find(),
-    reservations: () => Reservation.find(),
+    users: entitiesResolverCreator(User),
+    trackers: entitiesResolverCreator(Tracker),
+    sportRecords: entitiesResolverCreator(SportRecord),
+    spaceTypes: entitiesResolverCreator(SpaceType),
+    spaces: entitiesResolverCreator(Space),
+    equipmentTypes: entitiesResolverCreator(EquipmentType),
+    equipments: entitiesResolverCreator(Equipment),
+    reservations: entitiesResolverCreator(Reservation),
   },
   User: {},
   Tracker: {},
-  Resource: {
-    __resolveType(obj) {
-      return obj.__t;
-    },
-    type: obj => ResourceType.findById(obj.type),
-  },
-  ResourceType: {
-    __resolveType(obj) {
-      return obj.__t;
-    },
-  },
-  SpaceType: {},
-  EquipmentType: {},
   SportRecord: {
     user(obj) {
       return User.findById(obj.user);
@@ -47,6 +37,19 @@ const resolvers = {
       return Tracker.findById(obj.tracker);
     },
   },
+  ResourceType: {
+    __resolveType(obj) {
+      return obj.__t;
+    },
+  },
+  Resource: {
+    __resolveType(obj) {
+      return obj.__t;
+    },
+    type: obj => ResourceType.findById(obj.type),
+  },
+  SpaceType: {},
+  EquipmentType: {},
   Space: {},
   Equipment: {},
   Reservation: {
