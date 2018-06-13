@@ -30,7 +30,8 @@
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings -r babel-register ./internals/scripts/RunTests.js",
     "test-all": "npm run lint && npm run flow && npm run build && npm run test && npm run test-e2e",
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings -r babel-register ./internals/scripts/RunTests.js e2e",
-    "test-watch": "npm test -- --watch"
+    "test-watch": "npm test -- --watch",
+    "server": "nodemon server/index.js"
   },
   "browserslist": "electron 1.6",
   "lint-staged": {
@@ -180,6 +181,7 @@
     "lint-staged": "^7.1.2",
     "minimist": "^1.2.0",
     "node-sass": "^4.9.0",
+    "nodemon": "^1.17.5",
     "npm-logical-tree": "^1.2.1",
     "prettier": "^1.13.4",
     "react-test-renderer": "^16.4.0",

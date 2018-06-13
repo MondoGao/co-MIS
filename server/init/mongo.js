@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const logger = require('../logger');
 const config = require('../config');
 const delay = require('../helpers/delay');
+const { seed } = require('./seeds');
 
 const { host, db } = config;
 
@@ -18,7 +19,7 @@ async function initDbUser() {
   try {
     const { connection: conn } = await mongoose.connect(
       `mongodb://${host}/admin`,
-      db.admin
+      db.admin,
     );
     canConnect = true;
 
@@ -48,9 +49,14 @@ async function initDbConnection({ maxTryCount = 4 } = {}) {
     }
   }
 
-  await mongoose.connect(`mongodb://${host}/sports`, db.app);
+  await mongoose.connect(
+    `mongodb://${host}/sports`,
+    db.app,
+  );
 
   logger.info('Success connected to mongo with mondo in sports');
+
+  await seed();
 }
 
 module.exports = {
