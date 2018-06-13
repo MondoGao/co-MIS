@@ -12,8 +12,29 @@ const {
   Reservation,
 } = require('../models');
 
-const entitiesResolverCreator = Entity => (obj, args) =>
-  Entity.find(args.query);
+const entitiesResolverCreator = Entity => (obj, { query = {} }) => {
+  if (query.id) {
+    return [Entity.findById(query.id)];
+  }
+
+  return Entity.find(query);
+};
+
+const updateMutationCreator = Entity => async (obj, { data = {} }) => {
+  if (!data.id) {
+    return Entity.create(data);
+  }
+
+  const record = await Entity.findById(data.id);
+
+  for (const [key, value] of Object.entries(data)) {
+    record[key] = value;
+  }
+
+  await record.save();
+
+  return record;
+};
 
 const resolvers = {
   Date: GraphQLDateTime,
@@ -26,6 +47,16 @@ const resolvers = {
     equipmentTypes: entitiesResolverCreator(EquipmentType),
     equipments: entitiesResolverCreator(Equipment),
     reservations: entitiesResolverCreator(Reservation),
+  },
+  Mutation: {
+    updateUser: updateMutationCreator(User),
+    updateTracker: updateMutationCreator(Tracker),
+    updateSportRecord: updateMutationCreator(SportRecord),
+    updateSpaceType: updateMutationCreator(SpaceType),
+    updateEquipmentType: updateMutationCreator(EquipmentType),
+    updateSpace: updateMutationCreator(Space),
+    updateEquipment: updateMutationCreator(Equipment),
+    updateReservation: updateMutationCreator(Reservation),
   },
   User: {},
   Tracker: {},

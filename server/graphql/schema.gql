@@ -29,6 +29,7 @@ type Coordinate {
   y: Float!
 }
 
+
 type SportRecord {
   id: ID!
   user: User!
@@ -140,4 +141,57 @@ type Query {
   spaces(query: ResourceQuery): [Space]
   equipments(query: ResourceQuery): [Equipment]
   reservations(query: ReservationQuery): [Reservation]
+}
+
+input CoordinateMutation {
+  x: Float!
+  y: Float!
+}
+
+input SportRecordMutation {
+  id: ID
+  user: ID!
+  tracker: ID!
+  startTime: Date!
+  endTime: Date
+  path: [CoordinateMutation]!
+}
+
+input TimeMutation {
+  hour: Int
+  minute: Int
+}
+
+input DurationMutation {
+  start: TimeMutation
+  end: TimeMutation
+}
+
+input ResourceMutation {
+  id: ID
+  name: String!
+  type: ID!
+  isAvaliable: Boolean!
+  avaliableDuration: DurationMutation!
+}
+
+input ReservationMutation {
+  id: ID
+  startTime: Date!
+  endTime: Date!
+  isActived: Boolean!
+  isClosed: Boolean!
+  user: ID!
+  resource: ID!
+}
+
+type Mutation {
+  updateSportRecord(data: SportRecordMutation): SportRecord
+  updateUser(data: UserQuery): User
+  updateTracker(data: TrackerQuery): Tracker
+  updateSpaceType(data: ResourceTypeQuery): SpaceType
+  updateEquipmentType(data: ResourceQuery): EquipmentType
+  updateSpace(data: ResourceMutation): Space
+  updateEquipment(data: ResourceMutation): Equipment
+  updateReservation(data: ReservationMutation): Reservation
 }

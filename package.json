@@ -204,10 +204,12 @@
   },
   "dependencies": {
     "antd": "^3.5.4",
+    "apollo-boost": "^0.1.8",
     "babel-plugin-import": "^1.7.0",
     "devtron": "^1.4.0",
     "electron-debug": "^1.5.0",
     "font-awesome": "^4.7.0",
+    "graphql-tag": "^2.9.2",
     "history": "^4.7.2",
     "luxon": "^1.2.1",
     "ramda": "^0.25.0",
