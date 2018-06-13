@@ -1,33 +1,100 @@
 scalar Date
 
 type User {
-  id: ID
-  rfid: String
-  name: String
+  id: ID!
+  rfid: String!
+  name: String!
 }
 
 type Tracker {
-  id: ID
-  rfid: String
-  channel: String
+  id: ID!
+  rfid: String!
+  channel: String!
 }
 
 type Coordinate {
-  x: Float
-  y: Float
+  x: Float!
+  y: Float!
 }
 
 type SportRecord {
-  id: ID
-  user: User
-  tracker: Tracker
-  startTime: Date
+  id: ID!
+  user: User!
+  tracker: Tracker!
+  startTime: Date!
   endTime: Date
-  path: [Coordinate]
+  path: [Coordinate]!
+}
+
+interface ResourceType {
+  id: ID!
+  name: String!
+}
+
+type SpaceType implements ResourceType {
+  id: ID!
+  name: String!
+}
+
+type EquipmentType implements ResourceType {
+  id: ID!
+  name: String!
+}
+
+type Time {
+  hour: Int!
+  minute: Int!
+}
+
+type Duration {
+  start: Time!
+  end: Time!
+}
+
+interface Resource {
+  id: ID!
+  name: String!
+  type: ResourceType!
+  isAvaliable: Boolean!
+  avaliableDuration: Duration!
+  createAt: Date!
+}
+
+type Space implements Resource {
+  id: ID!
+  name: String!
+  type: ResourceType!
+  isAvaliable: Boolean!
+  avaliableDuration: Duration!
+  createAt: Date!
+}
+
+type Equipment implements Resource {
+  id: ID!
+  name: String!
+  type: ResourceType!
+  isAvaliable: Boolean!
+  avaliableDuration: Duration!
+  createAt: Date!
+}
+
+type Reservation {
+  id: ID!
+  startTime: Date!
+  endTime: Date!
+  isActived: Boolean!
+  isClosed: Boolean!
+  user: User!
+  resource: Resource!
 }
 
 type Query {
   users: [User]
   trackers: [Tracker]
   sportRecords: [SportRecord]
+  spaceTypes: [SpaceType]
+  equipmentTypes: [EquipmentType]
+  spaces: [Space]
+  equipments: [Equipment]
+  reservations: [Reservation]
 }

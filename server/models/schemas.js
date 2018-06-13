@@ -65,20 +65,25 @@ const resourceTypeSchema = new Schema(
   },
 );
 
-const reservationSchema = new Schema({
-  startTime: Date,
-  endTime: Date,
-  isActived: Boolean,
-  isClosed: Boolean,
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+const reservationSchema = new Schema(
+  {
+    startTime: Date,
+    endTime: Date,
+    isActived: Boolean,
+    isClosed: Boolean,
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    resource: {
+      type: Schema.Types.ObjectId,
+      ref: 'Resource',
+    },
   },
-  resource: {
-    type: Schema.Types.ObjectId,
-    ref: 'Resource',
+  {
+    timestamps: true,
   },
-});
+);
 
 const resourceSchema = new Schema(
   {
