@@ -1,5 +1,6 @@
 const Koa = require('koa');
 const koaLogger = require('koa-logger');
+const koaBodyparser = require('koa-bodyparser');
 
 const router = require('./router');
 
@@ -12,6 +13,7 @@ async function start() {
 
   app
     .use(koaLogger())
+    .use(koaBodyparser())
     .use(router.routes())
     .use(router.allowedMethods())
     .listen(3000);

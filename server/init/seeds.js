@@ -2,7 +2,6 @@ const {
   User,
   Tracker,
   SportRecord,
-  Reservation,
   SpaceType,
   Space,
   EquipmentType,

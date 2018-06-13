@@ -1,0 +1,33 @@
+scalar Date
+
+type User {
+  id: ID
+  rfid: String
+  name: String
+}
+
+type Tracker {
+  id: ID
+  rfid: String
+  channel: String
+}
+
+type Coordinate {
+  x: Float
+  y: Float
+}
+
+type SportRecord {
+  id: ID
+  user: User
+  tracker: Tracker
+  startTime: Date
+  endTime: Date
+  path: [Coordinate]
+}
+
+type Query {
+  users: [User]
+  trackers: [Tracker]
+  sportRecords: [SportRecord]
+}
