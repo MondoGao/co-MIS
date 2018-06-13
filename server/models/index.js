@@ -40,6 +40,8 @@ const Equipment = Resource.discriminator(
 module.exports = {
   User,
   Tracker,
+  ResourceType,
+  Resource,
   SportRecord,
   Reservation,
   SpaceType,

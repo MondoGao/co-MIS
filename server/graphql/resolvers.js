@@ -38,20 +38,25 @@ const resolvers = {
     },
   },
   ResourceType: {
-    __resolveType(obj) {
+    async __resolveType(id) {
+      const obj = await ResourceType.findById(id);
       return obj.__t;
     },
   },
   Resource: {
-    __resolveType(obj) {
+    async __resolveType(id) {
+      const obj = await Resource.findById(id);
       return obj.__t;
     },
-    type: obj => ResourceType.findById(obj.type),
   },
   SpaceType: {},
   EquipmentType: {},
-  Space: {},
-  Equipment: {},
+  Space: {
+    type: obj => ResourceType.findById(obj.type),
+  },
+  Equipment: {
+    type: obj => ResourceType.findById(obj.type),
+  },
   Reservation: {
     user: obj => User.findById(obj.user),
     resource: obj => Resource.findById(obj.resouce),
