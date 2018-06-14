@@ -11,6 +11,7 @@ export default class SportMonitor extends Component {
   state = {
     currentStage: 1,
     sportRecord: null,
+    tracker: null,
   };
 
   nextStage = () => {
@@ -31,10 +32,18 @@ export default class SportMonitor extends Component {
     });
   };
 
+  updateTracker = tracker => {
+    this.setState({
+      tracker,
+    });
+  };
+
   renderBindBand = () => (
     <CardReader
       next={this.nextStage}
       updateSportRecord={this.updateSportRecord}
+      updateTracker={this.updateTracker}
+      tracker={this.state.tracker}
       sportRecord={this.state.sportRecord}
     />
   );

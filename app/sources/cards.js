@@ -13,13 +13,11 @@ export async function getCard() {
 }
 
 export async function getTracker() {
-  const { rfid } = await handler(
-    'getCard',
-    {},
+  const [{ EPCString: rfid }] = await handler('getCard', {}, [
     {
-      rfid: 'tracker1',
+      EPCString: '000000000000000000000090',
     },
-  );
+  ]);
 
   const { data } = await gqlClient.query({
     query: gql`

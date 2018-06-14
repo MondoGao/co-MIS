@@ -9,7 +9,6 @@ import styles from './CardReader.scss';
 export default class CardReader extends React.Component {
   state = {
     stage: 0,
-    tracker: null,
   };
 
   stages = [
@@ -21,16 +20,14 @@ export default class CardReader extends React.Component {
 
         console.log('tracker', tracker);
 
-        this.setState({
-          tracker,
-        });
+        this.props.updateTracker(tracker);
       },
     },
     {
       percent: 66,
       text: '登记设备中...',
       process: async () => {
-        const { tracker } = this.state;
+        const { tracker } = this.props;
         const sportRecordData = {
           user: '5b212e4e67e4cfea4e52133b',
           tracker: tracker.id,
@@ -45,6 +42,7 @@ export default class CardReader extends React.Component {
         console.log(sportRecord);
 
         this.props.updateSportRecord(sportRecord);
+        await delay(1000);
       },
     },
     {

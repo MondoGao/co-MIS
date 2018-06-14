@@ -8,6 +8,7 @@ export async function editSportRecord(newData) {
         updateSportRecord(data: $data) {
           id
           startTime
+          endTime
           user {
             id
           }
