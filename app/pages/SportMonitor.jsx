@@ -1,5 +1,10 @@
 import React from 'react';
 import { Steps, Layout, Card } from 'antd';
+import * as R from 'ramda';
+import { DateTime } from 'luxon';
+
+import * as localSence from '@/sources/localSence';
+import * as sources from '@/sources';
 
 import CardReader from '@/components/CardReader';
 import SportStatus from '@/components/SportStatus';
@@ -13,6 +18,10 @@ export default class SportMonitor extends Component {
     sportRecord: null,
     tracker: null,
   };
+
+  componentDidMount() {
+    localSence.initConnection();
+  }
 
   nextStage = () => {
     this.setState(({ currentStage }) => ({
@@ -49,10 +58,23 @@ export default class SportMonitor extends Component {
   );
   renderSportStatus = () => (
     <SportStatus
-      next={this.nextStage}
+      next={async () => {
+        const { sportRecord } = this.state;
+        const newSR = await sources.sports.editSportRecord(
+          R.omit(['__typename'], {
+            ...sportRecord,
+            user: sportRecord.user.id,
+            tracker: sportRecord.tracker.id,
+            endTime: DateTime.local().toISO(),
+          }),
+        );
+        this.updateSportRecord(newSR);
+        this.nextStage();
+      }}
       isFinished={false}
       updateSportRecord={this.updateSportRecord}
       sportRecord={this.state.sportRecord}
+      tracker={this.state.tracker}
     />
   );
   renderSportResult = () => (

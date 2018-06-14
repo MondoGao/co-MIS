@@ -1,9 +1,14 @@
 import React from 'react';
 import { DateTime } from 'luxon';
 import * as R from 'ramda';
+import _ from 'lodash';
 import { Layout, Timeline, Button, Alert } from 'antd';
 
 import styles from './SportStatus.scss';
+import * as localSence from '@/sources/localSence';
+
+const centerLngLat = [114.431282, 30.512939];
+const startLngLat = [centerLngLat[0] - 0.0005, centerLngLat[1] - 0.001];
 
 export default class SportStatus extends React.Component {
   state = {
@@ -21,6 +26,34 @@ export default class SportStatus extends React.Component {
         });
       }, 1000),
     });
+
+    if (!this.props.isFinished) {
+      localSence.subscribe(this.posDataHandler);
+    }
+  }
+
+  componentDidUpdate({ sportRecord: prevSR }) {
+    const { sportRecord } = this.props;
+
+    if (sportRecord.path.length !== prevSR.path.length) {
+      const aPath = sportRecord.path.map(
+        ({ x, y }) =>
+          new AMap.LngLat(
+            startLngLat[0] + x / 800000,
+            startLngLat[1] + y / 800000,
+          ),
+      );
+      aPath.unshift(new AMap.LngLat(...startLngLat));
+
+      const aLine = new AMap.Polyline({
+        path: aPath,
+        borderWeight: 2,
+        strokeColor: 'blue',
+        lineJoin: 'round',
+      });
+
+      this.state.amapIns.add(aLine);
+    }
   }
 
   componentWillUnmount() {
@@ -30,9 +63,34 @@ export default class SportStatus extends React.Component {
 
   mapRef = React.createRef();
 
+  posDataHandler = _.throttle(posData => {
+    if (this.props.isFinished) {
+      return;
+    }
+
+    const loc = R.find(
+      R.propEq('id', Number(this.props.tracker.channel)),
+      posData,
+    );
+    if (loc) {
+      const { sportRecord } = this.props;
+      const newSportRecord = {
+        ...sportRecord,
+        path: [
+          ...sportRecord.path,
+          {
+            x: loc.x,
+            y: loc.y,
+          },
+        ],
+      };
+      this.props.updateSportRecord(newSportRecord);
+    }
+  }, 1500);
+
   mountMap() {
     const amapIns = new AMap.Map(this.mapRef.current, {
-      center: [114.431282, 30.512939],
+      center: centerLngLat,
       zoom: 19,
       zooms: [17, 19],
     });
