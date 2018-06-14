@@ -1,57 +1,30 @@
-import handler from './handler';
+import { gqlClient } from './handler';
+import gql from 'graphql-tag';
 
-export function add() {
-  return handler(
-    'sports',
-    {},
-    {
-      id: 'xx1',
-      isFinished: false,
-      startTime: Date.now(),
-      path: [
-        {
-          x: 1,
-          y: 1,
-        },
-      ],
+export async function editSportRecord(newData) {
+  const { data } = await gqlClient.mutate({
+    mutation: gql`
+      mutation($data: SportRecordMutation) {
+        updateSportRecord(data: $data) {
+          id
+          startTime
+          user {
+            id
+          }
+          tracker {
+            id
+          }
+          path {
+            x
+            y
+          }
+        }
+      }
+    `,
+    variables: {
+      data: newData,
     },
-  );
-}
+  });
 
-export function edit() {
-  return handler(
-    'sports',
-    {},
-    {
-      id: 'xx1',
-      isFinished: false,
-      startTime: Date.now(),
-      path: [
-        {
-          x: 1,
-          y: 1,
-        },
-        {
-          x: 2,
-          y: 2,
-        },
-      ],
-    },
-  );
-}
-
-export function all() {
-  return handler('sports', {}, [
-    {
-      id: 'xx1',
-      isFinished: false,
-      startTime: Date.now(),
-      path: [
-        {
-          x: 1,
-          y: 1,
-        },
-      ],
-    },
-  ]);
+  return data.updateSportRecord;
 }

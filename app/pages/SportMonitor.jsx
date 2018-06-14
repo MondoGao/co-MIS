@@ -9,7 +9,8 @@ const { Step } = Steps;
 
 export default class SportMonitor extends Component {
   state = {
-    currentStage: 2,
+    currentStage: 1,
+    sportRecord: null,
   };
 
   nextStage = () => {
@@ -24,14 +25,32 @@ export default class SportMonitor extends Component {
     }));
   };
 
-  renderBindBand = () => <CardReader next={this.nextStage} />;
+  updateSportRecord = sportRecord => {
+    this.setState({
+      sportRecord,
+    });
+  };
+
+  renderBindBand = () => (
+    <CardReader
+      next={this.nextStage}
+      updateSportRecord={this.updateSportRecord}
+      sportRecord={this.state.sportRecord}
+    />
+  );
   renderSportStatus = () => (
-    <SportStatus next={this.nextStage} isFinished={false} />
+    <SportStatus
+      next={this.nextStage}
+      isFinished={false}
+      updateSportRecord={this.updateSportRecord}
+      sportRecord={this.state.sportRecord}
+    />
   );
   renderSportResult = () => (
     <SportStatus
       next={this.nextStage}
       isFinished={true}
+      sportRecord={this.state.sportRecord}
       restart={this.restartStage}
     />
   );

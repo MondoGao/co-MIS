@@ -9,18 +9,43 @@ import styles from './CardReader.scss';
 export default class CardReader extends React.Component {
   state = {
     stage: 0,
+    tracker: null,
   };
 
   stages = [
     {
       percent: 33,
       text: '扫描设备中...',
-      process: sources.cards.getTracker,
+      process: async () => {
+        const tracker = await sources.cards.getTracker();
+
+        console.log('tracker', tracker);
+
+        this.setState({
+          tracker,
+        });
+      },
     },
     {
       percent: 66,
       text: '登记设备中...',
-      process: sources.sports.add,
+      process: async () => {
+        const { tracker } = this.state;
+        const sportRecordData = {
+          user: '5b212e4e67e4cfea4e52133b',
+          tracker: tracker.id,
+          path: [],
+          startTime: new Date().toISOString(),
+        };
+
+        const sportRecord = await sources.sports.editSportRecord(
+          sportRecordData,
+        );
+
+        console.log(sportRecord);
+
+        this.props.updateSportRecord(sportRecord);
+      },
     },
     {
       percent: 100,

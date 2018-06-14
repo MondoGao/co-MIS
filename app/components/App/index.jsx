@@ -171,7 +171,7 @@ export default class App extends React.Component {
       }),
     );
     const defaultOpenKeys = R.map(R.prop('path'))(siderMenuConfig);
-    const defaultPath = 'spaceReservation';
+    const defaultPath = 'sportMonitor';
 
     return (
       <Layout className={styles.app}>

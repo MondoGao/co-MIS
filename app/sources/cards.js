@@ -1,4 +1,5 @@
-import handler from './handler';
+import handler, { gqlClient } from './handler';
+import gql from 'graphql-tag';
 
 export async function getCard() {
   return handler(
@@ -12,14 +13,30 @@ export async function getCard() {
 }
 
 export async function getTracker() {
-  return handler(
+  const { rfid } = await handler(
     'getCard',
     {},
     {
-      id: 'X001',
-      type: 'tracker',
+      rfid: 'tracker1',
     },
   );
+
+  const { data } = await gqlClient.query({
+    query: gql`
+      query($query: TrackerQuery) {
+        trackers(query: $query) {
+          channel
+          id
+          rfid
+        }
+      }
+    `,
+    variables: {
+      query: {
+        rfid,
+      },
+    },
+  });
+
+  return data.trackers[0];
 }
-
-
