@@ -47,8 +47,8 @@ async function seed() {
     Tracker,
     [
       {
-        rfid: 'tracker1',
-        channel: 'tracker1',
+        rfid: '000000000000000000000090',
+        channel: '10295',
       },
     ],
     'tracker',
@@ -125,6 +125,7 @@ async function seed() {
       {
         name: '地球出品',
         type: equipType.id,
+        rfid: '000000000000000000000092',
         isAvaliable: true,
         avaliableDuration: {
           start: {

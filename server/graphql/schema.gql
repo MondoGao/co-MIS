@@ -41,8 +41,8 @@ type SportRecord {
 
 input SportRecordQuery {
   id: ID
-  user: UserQuery
-  tracker: TrackerQuery
+  user: ID
+  tracker: ID
   startTime: Date
   endTime: Date
 }
@@ -91,6 +91,7 @@ input ResourceQuery {
   name: String
   type: ResourceTypeQuery
   isAvaliable: Boolean
+  rfid: String
   createAt: Date
 }
 
@@ -101,6 +102,7 @@ type Space implements Resource {
   isAvaliable: Boolean!
   avaliableDuration: Duration!
   createAt: Date!
+  rfid: String
 }
 
 type Equipment implements Resource {
@@ -109,6 +111,7 @@ type Equipment implements Resource {
   type: ResourceType!
   isAvaliable: Boolean!
   avaliableDuration: Duration!
+  rfid: String
   createAt: Date!
 }
 

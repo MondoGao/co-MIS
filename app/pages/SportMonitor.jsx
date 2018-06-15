@@ -3,7 +3,6 @@ import { Steps, Layout, Card } from 'antd';
 import * as R from 'ramda';
 import { DateTime } from 'luxon';
 
-import * as localSence from '@/sources/localSence';
 import * as sources from '@/sources';
 
 import CardReader from '@/components/CardReader';
@@ -17,11 +16,10 @@ export default class SportMonitor extends Component {
     currentStage: 1,
     sportRecord: null,
     tracker: null,
+    user: {
+      id: '5b212e4e67e4cfea4e52133b',
+    },
   };
-
-  componentDidMount() {
-    localSence.initConnection();
-  }
 
   nextStage = () => {
     this.setState(({ currentStage }) => ({
@@ -54,6 +52,7 @@ export default class SportMonitor extends Component {
       updateTracker={this.updateTracker}
       tracker={this.state.tracker}
       sportRecord={this.state.sportRecord}
+      user={this.state.user}
     />
   );
   renderSportStatus = () => (
@@ -74,6 +73,7 @@ export default class SportMonitor extends Component {
       isFinished={false}
       updateSportRecord={this.updateSportRecord}
       sportRecord={this.state.sportRecord}
+      user={this.state.user}
       tracker={this.state.tracker}
     />
   );
@@ -82,6 +82,7 @@ export default class SportMonitor extends Component {
       next={this.nextStage}
       isFinished={true}
       sportRecord={this.state.sportRecord}
+      user={this.state.user}
       restart={this.restartStage}
     />
   );

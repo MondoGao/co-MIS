@@ -1,9 +1,11 @@
+import { message } from 'antd';
+
 let ws1 = null;
 const hostUrl = '192.168.0.151';
 const wsUrl = `ws://${hostUrl}:9001`;
 const wsProtocal = 'localSensePush-protocol';
 const wsProtocalPivate = 'localSensePivate-protocol';
-const listeners = [];
+let listeners = [];
 
 const defaultOpts = {
   hostUrl,
@@ -113,15 +115,30 @@ export function subscribe(listener) {
   listeners.push(listener);
 }
 
+export function clear() {
+  listeners = [];
+}
+
 export function initConnection(opts = {}) {
   const resOpts = {
     ...defaultOpts,
     ...opts,
   };
+  return new Promise((resolve, reject) => {
+    const loadFinish = message.loading('联接位置服务器中', 0);
 
-  ws1 = new WebSocket(resOpts.wsUrl, [resOpts.wsProtocal]);
-  ws1.addEventListener('open', () => {
-    console.log('WebSocket open', ws1);
+    ws1 = new WebSocket(resOpts.wsUrl, [resOpts.wsProtocal]);
+    ws1.addEventListener('open', () => {
+      console.log('WebSocket open', ws1);
+      loadFinish();
+      message.success('成功联接位置服务器');
+      resolve();
+    });
+    ws1.addEventListener('message', pushDataHandler);
+    ws1.addEventListener('error', () => {
+      loadFinish();
+      message.error('联接位置服务器失败');
+      reject();
+    });
   });
-  ws1.addEventListener('message', pushDataHandler);
 }
