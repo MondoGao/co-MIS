@@ -177,6 +177,8 @@ export default class App extends React.Component {
     const defaultOpenKeys = R.map(R.prop('path'))(siderMenuConfig);
     const defaultPath = 'sportData';
 
+    const selectedKey = history.location.pathname.slice(1);
+
     return (
       <Layout className={styles.app}>
         <Sider className={styles.sider}>
@@ -187,6 +189,7 @@ export default class App extends React.Component {
           <Menu
             theme="dark"
             defaultSelectedKeys={[defaultPath]}
+            selectedKeys={[selectedKey]}
             mode="inline"
             defaultOpenKeys={defaultOpenKeys}
             onSelect={this.handleMenuItemSelect}

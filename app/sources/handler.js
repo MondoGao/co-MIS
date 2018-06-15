@@ -1,7 +1,7 @@
 import ApolloClient from 'apollo-boost';
 import { delay } from '@/utils';
 
-export const publicPath = 'http://192.168.0.2:54759/api/';
+export const publicPath = 'http://192.168.0.11:54759/api/';
 export const graphqlPath = 'http://localhost:3000/graphql';
 
 export const gqlClient = new ApolloClient({

@@ -39,6 +39,10 @@ async function seed() {
         name: 'user2',
         rfid: 'user2',
       },
+      {
+        name: 'Mondo',
+        rfid: 'Mondo',
+      },
     ],
     'user',
   );
@@ -113,7 +117,10 @@ async function seed() {
     EquipmentType,
     [
       {
-        name: '雷射枪',
+        name: '激光剑',
+      },
+      {
+        name: '宇宙宝右',
       },
     ],
     'equipType',
