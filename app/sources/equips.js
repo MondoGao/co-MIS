@@ -30,6 +30,7 @@ export async function queryData(query) {
     variables: {
       query,
     },
+    fetchPolicy: 'no-cache',
   });
 
   return data.equipments;
@@ -48,6 +49,7 @@ export async function queryTypeData(query) {
     variables: {
       query,
     },
+    fetchPolicy: 'no-cache',
   });
 
   return data.equipmentTypes;

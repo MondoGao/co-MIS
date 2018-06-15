@@ -44,7 +44,7 @@ export default class CardReader extends React.Component {
 
         let sportRecord = {};
 
-        if (!last.endTime) {
+        if (last && !last.endTime) {
           message.info('恢复上次运动记录');
           sportRecord = last;
         } else {

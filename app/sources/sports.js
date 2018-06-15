@@ -27,6 +27,7 @@ export async function queryData(query) {
     variables: {
       query,
     },
+    fetchPolicy: 'no-cache',
   });
 
   return data.sportRecords;
