@@ -36,6 +36,7 @@ export default class CardReader extends React.Component {
 
         const userRecords = await sources.sports.queryData({
           user: user.id,
+          endTime: null,
         });
         const last = userRecords[userRecords.length - 1];
 

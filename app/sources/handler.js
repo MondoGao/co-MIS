@@ -6,6 +6,11 @@ export const graphqlPath = 'http://localhost:3000/graphql';
 
 export const gqlClient = new ApolloClient({
   uri: graphqlPath,
+  defaultOptions: {
+    query: {
+      fetchPolicy: 'network-only',
+    },
+  },
 });
 
 export default async function handler(url, options, mockData) {
