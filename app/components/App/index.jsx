@@ -28,11 +28,11 @@ const commonChildren = [
     desc: '新登记资源并绑定电子标签',
     component: EquipAdd,
   },
-  {
-    path: 'Borrow',
-    title: '借用',
-    desc: '查看并借用资源',
-  },
+  // {
+  //   path: 'Borrow',
+  //   title: '借用',
+  //   desc: '查看并借用资源',
+  // },
   {
     path: 'Data',
     title: '数据查询',
@@ -175,7 +175,7 @@ export default class App extends React.Component {
       }),
     );
     const defaultOpenKeys = R.map(R.prop('path'))(siderMenuConfig);
-    const defaultPath = 'equipmentData';
+    const defaultPath = 'sportData';
 
     return (
       <Layout className={styles.app}>
