@@ -13,11 +13,30 @@ export async function getCard() {
 }
 
 export async function getTracker() {
-  const [{ EPCString: rfid }] = await handler('getCard', {}, [
+  const rfidArr = await handler(
+    'rfidConnect',
     {
-      EPCString: '000000000000000000000090',
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        position: 2,
+      }),
     },
-  ]);
+    // [
+    // {
+    //   EPCString: '000000000000000000000090',
+    // },
+    // ]
+  );
+
+  console.log(rfidArr);
+  if (!rfidArr || rfidArr.length <= 0) {
+    throw new Error('未扫到标签');
+  }
+
+  const rfid = rfidArr[0];
 
   const { data } = await gqlClient.query({
     query: gql`

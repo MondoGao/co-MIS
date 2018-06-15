@@ -79,11 +79,13 @@ export default class CardReader extends React.Component {
   }
 
   componentDidUpdate(prevProps, { stage: prevStage, isFailed: prevIF }) {
-    if (prevStage !== this.state.stage) {
+    const isSwitching = false;
+    if (prevIF && !this.state.isFailed) {
+      this.isSwitching = true;
       this.switchStage();
     }
 
-    if (prevIF && !this.state.isFailed) {
+    if (prevStage !== this.state.stage && !isSwitching) {
       this.switchStage();
     }
   }
@@ -97,25 +99,25 @@ export default class CardReader extends React.Component {
 
     try {
       await process();
+      if (complete) {
+        return;
+      }
+
+      this.setState(({ stage }) => ({
+        stage: stage + 1,
+      }));
     } catch (e) {
+      message.error(e.message);
       this.setState({
         isFailed: true,
       });
     }
-
-    if (complete) {
-      return;
-    }
-
-    this.setState(({ stage }) => ({
-      stage: stage + 1,
-    }));
   }
 
   retry = () => {
     this.setState({
       isFailed: false,
-      stage: 1,
+      stage: 0,
     });
   };
 
@@ -132,8 +134,10 @@ export default class CardReader extends React.Component {
           status={isFailed ? 'exception' : isSpinShowing ? 'active' : 'success'}
         />
         <div className={styles.tipWrapper}>
-          {isSpinShowing ? <Spin size="small" /> : null}
-          <span className={styles.tipText}>{text}</span>
+          {isSpinShowing && !isFailed ? <Spin size="small" /> : null}
+          <span className={styles.tipText}>
+            {isFailed ? '出现错误，请 ' : text}
+          </span>
 
           {isFailed ? <Button onClick={this.retry}>重试</Button> : null}
         </div>

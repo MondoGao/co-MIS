@@ -1,7 +1,7 @@
 import ApolloClient from 'apollo-boost';
 import { delay } from '@/utils';
 
-export const publicPath = 'http://localhost:3000/';
+export const publicPath = 'http://192.168.0.2:54759/api/';
 export const graphqlPath = 'http://localhost:3000/graphql';
 
 export const gqlClient = new ApolloClient({
@@ -19,5 +19,13 @@ export default async function handler(url, options, mockData) {
     return mockData;
   }
 
-  return fetch(`${publicPath}${url}`, options);
+  console.log(url, options);
+
+  const res = await fetch(`${publicPath}${url}`, options);
+
+  if (res.status >= 400 || res.status < 200) {
+    throw new Error(res.statusText);
+  }
+
+  return res.json();
 }
