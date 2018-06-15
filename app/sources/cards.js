@@ -1,18 +1,7 @@
 import handler, { gqlClient } from './handler';
 import gql from 'graphql-tag';
 
-export async function getCard() {
-  return handler(
-    'getCard',
-    {},
-    {
-      id: 'U001',
-      type: 'user',
-    },
-  );
-}
-
-export async function getTracker() {
+export async function getCards(position = 2) {
   const rfidArr = await handler(
     'rfidConnect',
     {
@@ -21,7 +10,7 @@ export async function getTracker() {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        position: 2,
+        position,
       }),
     },
     // [
@@ -36,7 +25,26 @@ export async function getTracker() {
     throw new Error('未扫到标签');
   }
 
-  const rfid = rfidArr[0];
+  return rfidArr;
+}
+
+export async function getEquip(postion) {
+  const rfidArr = await getCards(1);
+
+  return handler(
+    'getCard',
+    {},
+    {
+      id: 'U001',
+      type: 'user',
+    },
+  );
+}
+
+export async function getTracker() {
+  const rfidArr = await getCards(2);
+
+  const rfid = rfidArr[0].EPCString;
 
   const { data } = await gqlClient.query({
     query: gql`
