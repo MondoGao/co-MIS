@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import { gqlClient } from './handler';
 
 export async function queryData(query) {
-  const { data } = gqlClient.query({
+  const { data } = await gqlClient.query({
     query: gql`
       query($query: ResourceQuery) {
         equipments(query: $query) {

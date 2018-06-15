@@ -11,6 +11,7 @@ import SportMonitor from '@/pages/SportMonitor';
 import SportData from '@/pages/SportData';
 import SpaceReservation from '@/pages/SpaceReservation';
 import EquipAdd from '@/pages/EquipAdd';
+import EquipData from '@/pages/EquipData';
 
 const { Sider, Content, Header } = Layout;
 
@@ -36,6 +37,7 @@ const commonChildren = [
     path: 'Data',
     title: '数据查询',
     desc: '查询借用数据',
+    component: EquipData,
   },
 ];
 
@@ -173,7 +175,7 @@ export default class App extends React.Component {
       }),
     );
     const defaultOpenKeys = R.map(R.prop('path'))(siderMenuConfig);
-    const defaultPath = 'equipmentEdit';
+    const defaultPath = 'equipmentData';
 
     return (
       <Layout className={styles.app}>

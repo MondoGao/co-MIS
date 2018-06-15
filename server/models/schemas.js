@@ -96,6 +96,7 @@ const resourceSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    rfid: String,
     avaliableDuration: {
       start: {
         hour: {
