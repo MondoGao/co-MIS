@@ -21,6 +21,15 @@ export default class SportMonitor extends Component {
     },
   };
 
+  componentDidUpdate(prevP, { sportRecord: prevSR }) {
+    const { sportRecord } = this.state;
+    if (prevSR != null && sportRecord != null) {
+      if (sportRecord.path.length != prevSR.path.length) {
+        this.uploadSportRecord(sportRecord);
+      }
+    }
+  }
+
   nextStage = () => {
     this.setState(({ currentStage }) => ({
       currentStage: currentStage + 1,
@@ -45,6 +54,19 @@ export default class SportMonitor extends Component {
     });
   };
 
+  uploadSportRecord = async sportRecord => {
+    const newSR = await sources.sports.editSportRecord(
+      R.omit(['__typename'], {
+        ...sportRecord,
+        path: sportRecord.path.map(R.omit(['__typename'])),
+        user: sportRecord.user.id,
+        tracker: sportRecord.tracker.id,
+      }),
+    );
+
+    return newSR;
+  };
+
   renderBindBand = () => (
     <CardReader
       next={this.nextStage}
@@ -59,14 +81,10 @@ export default class SportMonitor extends Component {
     <SportStatus
       next={async () => {
         const { sportRecord } = this.state;
-        const newSR = await sources.sports.editSportRecord(
-          R.omit(['__typename'], {
-            ...sportRecord,
-            user: sportRecord.user.id,
-            tracker: sportRecord.tracker.id,
-            endTime: DateTime.local().toISO(),
-          }),
-        );
+        const newSR = await this.uploadSportRecord({
+          ...sportRecord,
+          endTime: DateTime.local().toISO(),
+        });
         this.updateSportRecord(newSR);
         this.nextStage();
       }}

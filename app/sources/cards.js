@@ -13,11 +13,11 @@ export async function getCards(position = 2) {
         position,
       }),
     },
-    // [
-    // {
-    //   EPCString: '000000000000000000000090',
-    // },
-    // ]
+    [
+      {
+        EPCString: '000000000000000000000090',
+      },
+    ],
   );
 
   console.log(rfidArr);
