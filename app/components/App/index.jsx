@@ -10,30 +10,32 @@ import styles from './App.scss';
 import SportMonitor from '@/pages/SportMonitor';
 import SportData from '@/pages/SportData';
 import SpaceReservation from '@/pages/SpaceReservation';
+import EquipAdd from '@/pages/EquipAdd';
 
 const { Sider, Content, Header } = Layout;
 
 const commonChildren = [
+  // {
+  //   path: 'Reservation',
+  //   title: '预约',
+  //   desc: '提前预约空闲资源',
+  //   component: SpaceReservation,
+  // },
   {
-    path: 'Reservation',
-    title: '预约',
-    desc: '提前预约空闲资源',
-    component: SpaceReservation,
+    path: 'Edit',
+    title: '新增',
+    desc: '新登记资源并绑定电子标签',
+    component: EquipAdd,
   },
   {
     path: 'Borrow',
     title: '借用',
-    desc: '借用资源，之前预约过会自动为你提升借用上限',
-  },
-  {
-    path: 'Edit',
-    title: '新增及修改',
-    desc: '新登记或修改现有资源并绑定电子标签',
+    desc: '查看并借用资源',
   },
   {
     path: 'Data',
     title: '数据查询',
-    desc: '查询借用、预约数据',
+    desc: '查询借用数据',
   },
 ];
 
@@ -56,11 +58,11 @@ const siderMenuConfig = [
       },
     ],
   },
-  {
-    path: 'space',
-    title: '场地',
-    children: commonChildren,
-  },
+  // {
+  //   path: 'space',
+  //   title: '场地',
+  //   children: commonChildren,
+  // },
   {
     path: 'equipment',
     title: '器材',
@@ -171,7 +173,7 @@ export default class App extends React.Component {
       }),
     );
     const defaultOpenKeys = R.map(R.prop('path'))(siderMenuConfig);
-    const defaultPath = 'sportMonitor';
+    const defaultPath = 'equipmentEdit';
 
     return (
       <Layout className={styles.app}>
@@ -191,7 +193,7 @@ export default class App extends React.Component {
           </Menu>
         </Sider>
         <Layout>
-          <Header className={styles.mainHeader}>Header</Header>
+          <Header className={styles.mainHeader}>用户相关</Header>
           <Content>
             <Switch>
               {routes}

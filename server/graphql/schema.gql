@@ -84,6 +84,7 @@ interface Resource {
   isAvaliable: Boolean!
   avaliableDuration: Duration!
   createAt: Date!
+  rfid: String
 }
 
 input ResourceQuery {
@@ -176,6 +177,7 @@ input ResourceMutation {
   type: ID!
   isAvaliable: Boolean!
   avaliableDuration: DurationMutation!
+  rfid: String
 }
 
 input ReservationMutation {
