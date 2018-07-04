@@ -31,7 +31,9 @@
     "test-all": "npm run lint && npm run flow && npm run build && npm run test && npm run test-e2e",
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings -r babel-register ./internals/scripts/RunTests.js e2e",
     "test-watch": "npm test -- --watch",
-    "server": "nodemon server/index.js"
+    "server:dev": "cross-env NODE_ENV=development yarn server:docker && cross-env NODE_ENV=development yarn server:main",
+    "server:main": "nodemon server/index.js",
+    "server:docker": "cd server && docker-compose up -d"
   },
   "browserslist": "electron 1.6",
   "lint-staged": {
