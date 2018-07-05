@@ -4,6 +4,7 @@ type User {
   id: ID!
   rfid: String!
   name: String!
+  type: Int!
 }
 
 input UserQuery {

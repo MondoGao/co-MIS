@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Layout, Menu, Icon, Breadcrumb } from 'antd';
 import { Route, Switch, Redirect } from 'react-router';
 import * as R from 'ramda';
+import { connect } from 'react-redux';
 
 import { history } from '@/store/configureStore';
 import { mapRouteConfig } from '@/utils/jsxHelpers';
@@ -72,7 +73,9 @@ const siderMenuConfig = [
   },
 ];
 
-export default class App extends React.Component {
+class App extends React.Component {
+  componentDidMount() {}
+
   handleMenuItemSelect = inf => {
     history.push(`${inf.key}`);
   };
@@ -155,7 +158,23 @@ export default class App extends React.Component {
     );
   };
 
+  renderLogin() {
+    return (
+      <div class={styles.loginContainer}>
+        <div class={styles.sider}>
+          <h2>体育管理系统</h2>
+          <p>Enjoy your life. Healthy</p>
+          <Icon type="dribbble" />
+        </div>
+      </div>
+    );
+  }
+
   render() {
+    if (!R.path(['user', 'name'], this.props)) {
+      return <Layout className={styles.app}>{this.renderLogin()}</Layout>;
+    }
+
     const siderMenus = mapRouteConfig({
       config: siderMenuConfig,
       ctx: {
@@ -210,3 +229,9 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default connect(state => {
+  return {
+    user: R.path(['user', 'current'])(state),
+  };
+})(App);

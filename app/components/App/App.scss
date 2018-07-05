@@ -70,3 +70,50 @@
     background: #fff;
   }
 }
+
+.login-container {
+  display: flex;
+  height: 100%;
+  justify-content: stretch;
+  align-items: stretch;
+
+  .sider {
+    $divide: 60%;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20vh 2vw 10vh 5vw;
+    width: 40%;
+    background: linear-gradient(to bottom, #2178fd 0%, #2178fd $divide, #fff $divide, #fff 100%);
+    color: #fff;
+    white-space: nowrap;
+
+    h2 {
+      color: inherit;
+      font-size: 32px;
+    }
+
+    p {
+      font-size: 16px;
+      opacity: 0.6;
+
+      &::before {
+        content: '';
+        display: block;
+        height: 1px;
+        margin-bottom: 14px;
+        width: 50%;
+        background: #fff;
+      }
+    }
+
+    i {
+      position: absolute;
+      top: $divide;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 30vw;
+    }
+  }
+}
