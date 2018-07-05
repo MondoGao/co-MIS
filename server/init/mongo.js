@@ -39,14 +39,11 @@ async function initDbUser() {
 }
 
 async function initDbConnection({ maxTryCount = 4 } = {}) {
-  for (let count = 1; count <= maxTryCount; count++) {
-    try {
-      logger.info(`${count}th try to connect`);
-      await initDbUser();
-      break;
-    } catch (e) {
-      await delay(2000);
-    }
+  try {
+    logger.info(`${count}th try to connect`);
+    await initDbUser();
+  } catch (e) {
+    await delay(2000);
   }
 
   await mongoose.connect(

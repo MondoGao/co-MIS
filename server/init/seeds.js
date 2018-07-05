@@ -32,16 +32,9 @@ async function seed() {
     User,
     [
       {
-        name: 'user1',
-        rfid: 'user1',
-      },
-      {
-        name: 'user2',
-        rfid: 'user2',
-      },
-      {
         name: 'Mondo',
         rfid: 'Mondo',
+        type: 1,
       },
     ],
     'user',

@@ -16,6 +16,10 @@ const userSchema = new Schema(
   {
     rfid: String,
     name: String,
+    type: {
+      type: Number,
+      default: 1,
+    },
   },
   {
     timestamps: true,
