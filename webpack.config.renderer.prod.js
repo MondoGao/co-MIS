@@ -12,8 +12,6 @@ import baseConfig from './webpack.config.base';
 import devConfig from './webpack.config.renderer.dev';
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
 
-CheckNodeEnv('production');
-
 export default merge.smart(baseConfig, {
   devtool: 'source-map',
 
