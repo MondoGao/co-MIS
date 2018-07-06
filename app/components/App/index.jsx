@@ -20,12 +20,13 @@ import LoginForm from './LoginForm';
 const { Sider, Content, Header } = Layout;
 
 const commonChildren = [
-  // {
-  //   path: 'Reservation',
-  //   title: '预约',
-  //   desc: '提前预约空闲资源',
-  //   component: SpaceReservation,
-  // },
+  {
+    path: 'Reservation',
+    title: '预约',
+    desc: '提前预约空闲资源',
+    component: EquipData,
+    auth: 2,
+  },
   {
     path: 'Edit',
     title: '新增',
@@ -39,6 +40,13 @@ const commonChildren = [
     desc: '查看并借用资源',
     component: EquipBorrow,
     auth: 2,
+  },
+  {
+    path: 'BorrowData',
+    title: '借用数据',
+    desc: '提前预约空闲资源',
+    component: EquipData,
+    auth: 1,
   },
   {
     path: 'Data',
@@ -70,11 +78,11 @@ const siderMenuConfig = [
       },
     ],
   },
-  // {
-  //   path: 'space',
-  //   title: '场地',
-  //   children: commonChildren,
-  // },
+  {
+    path: 'space',
+    title: '场地',
+    children: commonChildren,
+  },
   {
     path: 'equipment',
     title: '器材',
@@ -267,12 +275,10 @@ class App extends React.Component {
 }
 
 export default connect(
-  state => {
-    return {
-      user: R.path(['user', 'current'])(state),
-      router: R.path(['router'])(state),
-    };
-  },
+  state => ({
+    user: R.path(['user', 'current'])(state),
+    router: R.path(['router'])(state),
+  }),
   {
     logoutAction: actions.user.logout,
   },
