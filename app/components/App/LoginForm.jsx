@@ -14,7 +14,7 @@ class LoginForm extends React.Component {
     isLogining: false,
     isSignuping: false,
     isScanning: false,
-    isModalVisible: true,
+    isModalVisible: false,
   };
 
   handleLoginClick = async () => {

@@ -35,6 +35,13 @@
   top: 0;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   z-index: 10;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.7);
+
+  > span {
+
+    color: #fff;
+  }
 }
 
 .page-layout {

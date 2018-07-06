@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Layout, Menu, Icon, Breadcrumb } from 'antd';
+import { Layout, Menu, Icon, Breadcrumb, Dropdown } from 'antd';
 import { Route, Switch, Redirect } from 'react-router';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 
 import { history } from '@/store/configureStore';
+import { actions } from '@/reducers/user';
 import { mapRouteConfig } from '@/utils/jsxHelpers';
 import styles from './App.scss';
 
@@ -79,6 +80,9 @@ class App extends React.Component {
 
   handleMenuItemSelect = inf => {
     history.push(`${inf.key}`);
+  };
+  handleLogout = () => {
+    this.props.logoutAction();
   };
 
   renderRoutes = ({ item, ctx, renderNode }) => {
@@ -218,7 +222,21 @@ class App extends React.Component {
           </Menu>
         </Sider>
         <Layout>
-          <Header className={styles.mainHeader}>用户相关</Header>
+          <Header className={styles.mainHeader}>
+            欢迎，
+            <Dropdown
+              overlay={
+                <Menu onClick={this.handleLogout}>
+                  <Menu.Item>注销</Menu.Item>
+                </Menu>
+              }
+            >
+              <a className="ant-dropdown-link" href="#">
+                {user.name}
+                <Icon type="down" />
+              </a>
+            </Dropdown>
+          </Header>
           <Content>
             <Switch>
               {routes}
@@ -231,9 +249,14 @@ class App extends React.Component {
   }
 }
 
-export default connect(state => {
-  return {
-    user: R.path(['user', 'current'])(state),
-    router: R.path(['router'])(state),
-  };
-})(App);
+export default connect(
+  state => {
+    return {
+      user: R.path(['user', 'current'])(state),
+      router: R.path(['router'])(state),
+    };
+  },
+  {
+    logoutAction: actions.user.logout,
+  },
+)(App);
