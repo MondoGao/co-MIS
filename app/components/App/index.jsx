@@ -14,6 +14,7 @@ import SportData from '@/pages/SportData';
 import SpaceReservation from '@/pages/SpaceReservation';
 import EquipAdd from '@/pages/EquipAdd';
 import EquipData from '@/pages/EquipData';
+import EquipBorrow from '@/pages/EquipBorrow';
 import LoginForm from './LoginForm';
 
 const { Sider, Content, Header } = Layout;
@@ -32,11 +33,13 @@ const commonChildren = [
     component: EquipAdd,
     auth: 1,
   },
-  // {
-  //   path: 'Borrow',
-  //   title: '借用',
-  //   desc: '查看并借用资源',
-  // },
+  {
+    path: 'Borrow',
+    title: '借用',
+    desc: '查看并借用资源',
+    component: EquipBorrow,
+    auth: 2,
+  },
   {
     path: 'Data',
     title: '数据查询',

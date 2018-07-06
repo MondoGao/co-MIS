@@ -1,5 +1,8 @@
 import gql from 'graphql-tag';
+import * as R from 'ramda';
 import { gqlClient } from './handler';
+
+import * as cards from './cards';
 
 export async function queryData(query) {
   const { data } = await gqlClient.query({
@@ -69,5 +72,25 @@ export async function edit(newData) {
     },
   });
 
-  return data.updaetEquipment;
+  return data.updateEquipment;
+}
+
+export async function scanAndView() {
+  const rfids = await cards.getCards();
+
+  if (rfids.length <= 0) {
+    throw new Error('未扫描到标签');
+  }
+
+  console.log(rfids);
+
+  const ids = R.map(R.prop('EPCString'))(rfids);
+  console.log(ids);
+
+  return Promise.all(
+    ids.map(async id => {
+      const data = await queryData({ rfid: id });
+      return R.prop(0, data);
+    }),
+  );
 }

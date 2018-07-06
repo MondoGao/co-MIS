@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.ready-tip {
+  font-size: 2vw;
+}
+
+.scan-tip {
+  margin-bottom: 20px;
+
+  :global(.ant-spin) {
+    margin-right: 10px;
+  }
+}
+
+.tip-wrapper {
+  margin-top: 20px;
+
+  .tip-text {
+    margin-left: 10px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  text-align: center;
+}

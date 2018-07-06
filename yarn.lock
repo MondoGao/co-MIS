@@ -53,6 +53,10 @@
     "@babel/types" "7.0.0-beta.49"
     lodash "^4.17.5"
 
+"@babel/helper-plugin-utils@7.0.0-beta.52":
+  version "7.0.0-beta.52"
+  resolved "http://registry.npm.taobao.org/@babel/helper-plugin-utils/download/@babel/helper-plugin-utils-7.0.0-beta.52.tgz#2f058c5f7c3a5fe4bc219036b2e78e11bddeb7ad"
+
 "@babel/helper-split-export-declaration@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.0.0-beta.44.tgz#c0b351735e0fbcb3822c8ad8db4e583b05ebd9dc"
@@ -74,6 +78,19 @@
     chalk "^2.0.0"
     esutils "^2.0.2"
     js-tokens "^3.0.0"
+
+"@babel/plugin-proposal-nullish-coalescing-operator@^7.0.0-beta.52":
+  version "7.0.0-beta.52"
+  resolved "http://registry.npm.taobao.org/@babel/plugin-proposal-nullish-coalescing-operator/download/@babel/plugin-proposal-nullish-coalescing-operator-7.0.0-beta.52.tgz#4436ea10499855a849e671d650c14939e6678d21"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.52"
+    "@babel/plugin-syntax-nullish-coalescing-operator" "7.0.0-beta.52"
+
+"@babel/plugin-syntax-nullish-coalescing-operator@7.0.0-beta.52":
+  version "7.0.0-beta.52"
+  resolved "http://registry.npm.taobao.org/@babel/plugin-syntax-nullish-coalescing-operator/download/@babel/plugin-syntax-nullish-coalescing-operator-7.0.0-beta.52.tgz#06c4d6f3054e04b26685e3a7775050b3bed20e04"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.52"
 
 "@babel/template@7.0.0-beta.44":
   version "7.0.0-beta.44"
