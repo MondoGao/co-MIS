@@ -1,3 +1,8 @@
+@media print {
+  *:not(.receipt) {
+    display: none;
+  }
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -29,4 +34,24 @@
   flex-direction: column;
   margin-top: 20px;
   text-align: center;
+}
+
+.receipt {
+  padding: 16px;
+  border: 1px solid grey;
+  font-size: 14px;
+
+  > h4 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+  > p {
+    margin: 16px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  * {
+    pointer-events: none;
+  }
 }

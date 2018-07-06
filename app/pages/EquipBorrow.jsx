@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as R from 'ramda';
 import { Table, Layout, Spin, Progress, Steps, Button } from 'antd';
+import { DateTime } from 'luxon';
+import { connect } from 'react-redux';
 
 import styles from './EquipBorrow.scss';
 import * as equips from '@/sources/equips';
@@ -15,6 +17,7 @@ class EquipBorrow extends React.Component {
     isFailed: false,
     equipData: [],
   };
+  receiptRef = React.createRef();
 
   handleReset = () => {
     this.setState({
@@ -51,7 +54,7 @@ class EquipBorrow extends React.Component {
     ));
   renderContent = steps => steps[this.state.currentStage].render();
 
-  renderTable = () => {
+  renderTable = props => {
     const { equipData } = this.state;
     function renderTime({ hour, minute }) {
       return `${hour} 时 ${minute} 分`;
@@ -60,35 +63,16 @@ class EquipBorrow extends React.Component {
     console.log(equipData);
 
     return (
-      <Fragment>
-        <Table rowKey="id" bordered dataSource={equipData}>
-          <Column title="名称" dataIndex="name" key="name" />
-          <Column title="类型" dataIndex="type.name" key="type" />
-          <Column
-            title="电子标签编号"
-            dataIndex="rfid"
-            key="rfid"
-            render={text => (text ? text : '无')}
-          />
-          <ColumnGroup title="可用时间">
-            <Column
-              title="起点"
-              dataIndex="avaliableDuration.start"
-              key="avaliableDurationStart"
-              render={renderTime}
-            />
-            <Column
-              title="终点"
-              dataIndex="avaliableDuration.end"
-              key="avaliableDurationEnd"
-              render={renderTime}
-            />
-          </ColumnGroup>
-        </Table>
-        <Button type="primary" onClick={this.handleConfirm}>
-          确认借用
-        </Button>
-      </Fragment>
+      <Table rowKey="id" bordered dataSource={equipData} {...props}>
+        <Column title="名称" dataIndex="name" key="name" />
+        <Column title="类型" dataIndex="type.name" key="type" />
+        <Column
+          title="电子标签编号"
+          dataIndex="rfid"
+          key="rfid"
+          render={text => (text ? text : '无')}
+        />
+      </Table>
     );
   };
   render() {
@@ -102,7 +86,7 @@ class EquipBorrow extends React.Component {
             <p className={styles.readyTip}>
               请准备好你要借的器材，并找到其上的标签所在处
             </p>
-            <Button primary onClick={this.startScan}>
+            <Button type="primary" onClick={this.startScan}>
               开始借用
             </Button>
           </Fragment>
@@ -120,13 +104,49 @@ class EquipBorrow extends React.Component {
       {
         name: 'confirm',
         title: '确认设备信息',
-        render: this.renderTable,
+        render: () => (
+          <Fragment>
+            {this.renderTable()}
+            <Button type="primary" onClick={this.handleConfirm}>
+              确认借用
+            </Button>
+          </Fragment>
+        ),
       },
       {
         name: 'finish',
         title: '查看借用单',
         render: () => {
-          return '';
+          const { equipData } = this.state;
+          const { user } = this.props;
+          return (
+            <Fragment>
+              <div className={styles.receipt} ref={this.receiptRef}>
+                <h4>器材借用单</h4>
+                <p>
+                  <span>
+                    日期：{DateTime.local().toLocaleString(
+                      DateTime.DATETIME_SHORT,
+                    )}
+                  </span>
+                  <span>借用人：{user.name}</span>
+                </p>
+                {this.renderTable({ pagination: false })}
+                <p>本单据由系统自动生成</p>
+              </div>
+              <Button
+                style={{ marginTop: 20 }}
+                type="primary"
+                onClick={() => {
+                  console.log(this.receiptRef);
+                  var divToPrint = this.receiptRef;
+                  window.print();
+                }}
+              >
+                打印
+              </Button>
+            </Fragment>
+          );
         },
       },
     ];
@@ -147,4 +167,6 @@ class EquipBorrow extends React.Component {
   }
 }
 
-export default EquipBorrow;
+export default connect(state => ({
+  user: state.user.current,
+}))(EquipBorrow);
