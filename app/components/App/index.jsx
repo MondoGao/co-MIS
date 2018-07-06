@@ -171,6 +171,7 @@ class App extends React.Component {
   }
 
   render() {
+    const { user, router } = this.props;
     if (!R.path(['user', 'name'], this.props)) {
       return <Layout className={styles.app}>{this.renderLogin()}</Layout>;
     }
@@ -196,7 +197,7 @@ class App extends React.Component {
     const defaultOpenKeys = R.map(R.prop('path'))(siderMenuConfig);
     const defaultPath = 'sportData';
 
-    const selectedKey = history.location.pathname.slice(1);
+    const selectedKey = router.location.pathname.slice(1);
 
     return (
       <Layout className={styles.app}>
@@ -233,5 +234,6 @@ class App extends React.Component {
 export default connect(state => {
   return {
     user: R.path(['user', 'current'])(state),
+    router: R.path(['router'])(state),
   };
 })(App);
