@@ -11,6 +11,7 @@ input UserQuery {
   id: ID
   rfid: String
   name: String
+  type: Int
 }
 
 type Tracker {

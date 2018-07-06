@@ -82,12 +82,12 @@
   color: #fff;
   white-space: nowrap;
 
-  h2 {
+  > h2 {
     color: inherit;
     font-size: 32px;
   }
 
-  p {
+  > p {
     margin-bottom: 40px;
     font-size: 16px;
     opacity: 0.6;
@@ -102,7 +102,7 @@
     }
   }
 
-  i {
+  > i {
     position: absolute;
     top: 100%;
     left: 80%;

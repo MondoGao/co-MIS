@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { combineReducers } from 'redux';
 import { handleActions, createActions } from 'redux-actions';
 
-export const { user } = createActions({
+export const actions = createActions({
   user: {
     login: R.identity,
   },
@@ -10,7 +10,7 @@ export const { user } = createActions({
 
 const current = handleActions(
   {
-    [user.login](state, { payload }) {
+    [actions.user.login](state, { payload }) {
       return payload;
     },
   },

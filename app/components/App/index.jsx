@@ -161,7 +161,7 @@ class App extends React.Component {
 
   renderLogin() {
     return (
-      <div class={styles.loginContainer}>
+      <div className={styles.loginContainer}>
         <h2>体育管理系统</h2>
         <p>Enjoy your life. Healthy</p>
         <Icon type="dribbble" />
