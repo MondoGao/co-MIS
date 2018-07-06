@@ -33,7 +33,7 @@ async function seed() {
     [
       {
         name: 'Mondo',
-        rfid: 'Mondo',
+        rfid: '000000000000000000000091',
         type: 1,
       },
     ],

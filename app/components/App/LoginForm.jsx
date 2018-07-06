@@ -29,23 +29,27 @@ class LoginForm extends React.Component {
 
     const error = () => {
       hide();
-      message.error('登录失败，请重试');
       this.setState({
         isLogining: false,
       });
     };
 
     try {
-      const { users } = await login();
-      const user = users[0];
+      const data = await login();
+      const user = R.path(['users', 0], data);
 
       if (!user) {
         error();
+        message.error('此用户未注册！');
+        return;
       }
 
       loginAction(user);
+      hide();
     } catch (e) {
+      console.log(e);
       error();
+      message.error('登录失败，请重试');
     }
   };
   handleSignupClick = () => {};

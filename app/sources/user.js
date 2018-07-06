@@ -29,6 +29,7 @@ export async function login() {
   const rfidArr = await getCards(1);
 
   const rfid = rfidArr[0].EPCString;
+  console.log(rfid);
 
   const { data } = await gqlClient.query({
     query: gql`
@@ -47,4 +48,6 @@ export async function login() {
       },
     },
   });
+
+  return data;
 }
