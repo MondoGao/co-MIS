@@ -7,7 +7,7 @@ export async function add({ name, rfid, type = 2 }) {
   const { data } = await gqlClient.mutate({
     mutation: gql`
       mutation($data: UserQuery) {
-        users(data: $data) {
+        updateUser(data: $data) {
           rfid
           name
           type
