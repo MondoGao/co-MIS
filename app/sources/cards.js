@@ -13,11 +13,11 @@ export async function getCards(position = 2) {
         position,
       }),
     },
-    // [
-    //   {
-    //     EPCString: '000000000000000000000090',
-    //   },
-    // ],
+    [
+      {
+        EPCString: '000000000000000000000090',
+      },
+    ],
   );
 
   console.log(rfidArr);
@@ -26,6 +26,30 @@ export async function getCards(position = 2) {
   }
 
   return rfidArr;
+}
+
+export async function login() {
+  const rfidArr = await getCards(1);
+
+  const rfid = rfidArr[0].EPCString;
+
+  const { data } = await gqlClient.query({
+    query: gql`
+      query($query: UserQuery) {
+        users(query: $query) {
+          rfid
+          name
+          type
+          id
+        }
+      }
+    `,
+    variables: {
+      query: {
+        rfid,
+      },
+    },
+  });
 }
 
 export async function getEquip(postion) {

@@ -13,6 +13,7 @@ import SportData from '@/pages/SportData';
 import SpaceReservation from '@/pages/SpaceReservation';
 import EquipAdd from '@/pages/EquipAdd';
 import EquipData from '@/pages/EquipData';
+import LoginForm from './LoginForm';
 
 const { Sider, Content, Header } = Layout;
 
@@ -161,11 +162,10 @@ class App extends React.Component {
   renderLogin() {
     return (
       <div class={styles.loginContainer}>
-        <div class={styles.sider}>
-          <h2>体育管理系统</h2>
-          <p>Enjoy your life. Healthy</p>
-          <Icon type="dribbble" />
-        </div>
+        <h2>体育管理系统</h2>
+        <p>Enjoy your life. Healthy</p>
+        <Icon type="dribbble" />
+        <LoginForm />
       </div>
     );
   }
