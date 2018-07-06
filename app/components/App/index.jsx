@@ -30,6 +30,7 @@ const commonChildren = [
     title: '新增',
     desc: '新登记资源并绑定电子标签',
     component: EquipAdd,
+    auth: 1,
   },
   // {
   //   path: 'Borrow',
@@ -41,6 +42,7 @@ const commonChildren = [
     title: '数据查询',
     desc: '查询借用数据',
     component: EquipData,
+    auth: 1,
   },
 ];
 
@@ -54,12 +56,14 @@ const siderMenuConfig = [
         title: '运动追踪',
         desc: '运动打卡及路径追踪',
         component: SportMonitor,
+        auth: 2,
       },
       {
         path: 'Data',
         title: '数据查询',
         desc: '查询运动数据',
         component: SportData,
+        auth: 1,
       },
     ],
   },
@@ -127,14 +131,23 @@ class App extends React.Component {
     );
   };
 
-  renderMenuItem = ({ item, ctx }) => (
-    <Menu.Item key={ctx.basePath + item.path}>
-      <span>
-        {'icon' in item ? <Icon type={item.icon} /> : null}
-        {item.title}
-      </span>
-    </Menu.Item>
-  );
+  renderMenuItem = ({ item, ctx }) => {
+    const { user } = this.props;
+    console.log(user.type);
+
+    if (item.auth < user.type) {
+      return null;
+    }
+
+    return (
+      <Menu.Item key={ctx.basePath + item.path}>
+        <span>
+          {'icon' in item ? <Icon type={item.icon} /> : null}
+          {item.title}
+        </span>
+      </Menu.Item>
+    );
+  };
 
   renderSubMenu = ({ item, ctx, renderLeaf, renderNode }) => {
     const path = ctx.basePath + item.path;
@@ -232,6 +245,7 @@ class App extends React.Component {
               }
             >
               <a className="ant-dropdown-link" href="#">
+                {user.type > 1 ? '普通用户 ' : '管理员 '}
                 {user.name}
                 <Icon type="down" />
               </a>
