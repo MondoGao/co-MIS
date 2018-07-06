@@ -2,23 +2,15 @@ import handler, { gqlClient } from './handler';
 import gql from 'graphql-tag';
 
 export async function getCards(position = 2) {
-  const rfidArr = await handler(
-    'rfidConnect',
-    {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        position,
-      }),
+  const rfidArr = await handler('rfidConnect', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
     },
-    [
-      {
-        EPCString: '000000000000000000000091',
-      },
-    ],
-  );
+    body: JSON.stringify({
+      position,
+    }),
+  });
 
   console.log(rfidArr);
   if (!rfidArr || rfidArr.length <= 0) {
@@ -28,21 +20,8 @@ export async function getCards(position = 2) {
   return rfidArr;
 }
 
-export async function getEquip(postion) {
-  const rfidArr = await getCards(1);
-
-  return handler(
-    'getCard',
-    {},
-    {
-      id: 'U001',
-      type: 'user',
-    },
-  );
-}
-
 export async function getTracker() {
-  const rfidArr = await getCards(2);
+  const rfidArr = await getCards();
 
   const rfid = rfidArr[0].EPCString;
 

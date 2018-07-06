@@ -76,7 +76,7 @@ export async function edit(newData) {
 }
 
 export async function scanAndView() {
-  const rfids = await cards.getCards();
+  const rfids = await cards.getCards(1);
 
   if (rfids.length <= 0) {
     throw new Error('未扫描到标签');

@@ -109,7 +109,7 @@ class LoginForm extends React.Component {
 
     const hideMsg = message.loading('扫描电子标签中', 0);
     try {
-      const arr = await cards.getCards(1);
+      const arr = await cards.getCards();
 
       this.props.form.setFieldsValue({
         rfid: arr[0].EPCString,

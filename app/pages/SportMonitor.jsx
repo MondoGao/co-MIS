@@ -2,6 +2,7 @@ import React from 'react';
 import { Steps, Layout, Card } from 'antd';
 import * as R from 'ramda';
 import { DateTime } from 'luxon';
+import { connect } from 'react-redux';
 
 import * as sources from '@/sources';
 
@@ -11,14 +12,11 @@ import SportStatus from '@/components/SportStatus';
 const { Fragment, Component } = React;
 const { Step } = Steps;
 
-export default class SportMonitor extends Component {
+class SportMonitor extends Component {
   state = {
     currentStage: 1,
     sportRecord: null,
     tracker: null,
-    user: {
-      id: '5b212e4e67e4cfea4e52133b',
-    },
   };
 
   componentDidUpdate(prevP, { sportRecord: prevSR }) {
@@ -74,7 +72,7 @@ export default class SportMonitor extends Component {
       updateTracker={this.updateTracker}
       tracker={this.state.tracker}
       sportRecord={this.state.sportRecord}
-      user={this.state.user}
+      user={this.props.user}
     />
   );
   renderSportStatus = () => (
@@ -91,7 +89,7 @@ export default class SportMonitor extends Component {
       isFinished={false}
       updateSportRecord={this.updateSportRecord}
       sportRecord={this.state.sportRecord}
-      user={this.state.user}
+      user={this.props.user}
       tracker={this.state.tracker}
     />
   );
@@ -100,7 +98,7 @@ export default class SportMonitor extends Component {
       next={this.nextStage}
       isFinished={true}
       sportRecord={this.state.sportRecord}
-      user={this.state.user}
+      user={this.props.user}
       restart={this.restartStage}
     />
   );
@@ -147,3 +145,7 @@ export default class SportMonitor extends Component {
     );
   }
 }
+
+export default connect(state => ({
+  user: state.user.current,
+}))(SportMonitor);

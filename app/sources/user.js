@@ -26,7 +26,7 @@ export async function add({ name, rfid, type = 2 }) {
 }
 
 export async function login() {
-  const rfidArr = await getCards(1);
+  const rfidArr = await getCards();
 
   const rfid = rfidArr[0].EPCString;
   console.log(rfid);
