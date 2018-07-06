@@ -125,7 +125,7 @@ export function initConnection(opts = {}) {
     ...opts,
   };
   return new Promise((resolve, reject) => {
-    const loadFinish = message.loading('联接位置服务器中', 0);
+    const loadFinish = message.loading('联接位置服务器中');
 
     ws1 = new WebSocket(resOpts.wsUrl, [resOpts.wsProtocal]);
     ws1.addEventListener('open', () => {

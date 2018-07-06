@@ -23,15 +23,15 @@ const entitiesResolverCreator = Entity => (obj, { query = {} }) => {
 const updateMutationCreator = Entity => async (obj, { data = {} }) => {
   let record;
   if (!data.id) {
-    if (!data.rfid) {
-      return Entity.create(data);
-    }
-
     record = await Entity.findOne({
       rfid: data.rfid,
     });
   } else {
     record = await Entity.findById(data.id);
+  }
+
+  if (!record) {
+    return Entity.create(data);
   }
 
   for (const [key, value] of Object.entries(data)) {

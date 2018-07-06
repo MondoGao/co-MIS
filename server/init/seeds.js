@@ -125,7 +125,7 @@ async function seed() {
       {
         name: '地球出品',
         type: equipType.id,
-        rfid: '000000000000000000000092',
+        rfid: '000000000000000000000093',
         isAvaliable: true,
         avaliableDuration: {
           start: {
